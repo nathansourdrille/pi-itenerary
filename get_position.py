@@ -1,6 +1,6 @@
 import time
 from gnss import *
-from ..utils import *
+from utils import *
 import argparse
 
 COORDS_DD=0

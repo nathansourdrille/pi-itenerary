@@ -113,9 +113,9 @@ class struct_GNSS_coordinate:
       self.direction = chr(rslt[5])
       
       # A compléter
-      self.coordinates_DMM = str(self.degrees)+'°'+str(self.minutes)+'.'+str(self.fractions_minutes)+"'"+str(self.direction)
+      self.coordinates_DMM = str(self.degres)+'°'+str(self.minutes)+'.'+str(self.fractions_minutes)+"'"+str(self.direction)
       decimal_part=self.fractions_minutes/60.0
-      self.coordinates_DD = self.degrees+self.minutes/60.0+decimal_part*10**-5
+      self.coordinates_DD = self.degres+self.minutes/60.0+decimal_part*10**-5
       if self.direction=='S':
           self.coordinates_DD=-self.coordinates_DD
       if self.direction == 'W':
