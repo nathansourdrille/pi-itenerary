@@ -1,7 +1,5 @@
 import time
-from 
-
-gnss import *
+from gnss import *
 from utils import *
 import argparse
 
@@ -42,7 +40,7 @@ def get_position(csv_out=None,no_LCD=False):
       # Actualisation des données GNSS
       gnss.update()
       if save_csv and gnss.reception_ok:
-        record.append_row([gnss.timestamp,gnss.utc,gnss.latitude.coords_DD,gnss.longitude.coords_DD])
+        record.append_row([gnss.timestamp,gnss.utc,gnss.latitude.coordinates_DD,gnss.longitude.coordinates_DD])
       
       # A COMPLETER
       latitude = gnss.latitude.coordinates_DMM
