@@ -15,7 +15,23 @@ def compute_distance(pt1,pt2):
     """
     
     # A COMPLETER
-    return 0
+    R = 6371000  
+    
+    # Conversion des coordonnées en radians
+    lat1, lon1 = map(math.radians, pt1)
+    lat2, lon2 = map(math.radians, pt2)
+
+    # Différences des coordonnées
+    delta_lat = lat2 - lat1
+    delta_lon = lon2 - lon1
+
+    # Formule de Haversine
+    a = math.sin(delta_lat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(delta_lon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # Distance finale en mètres
+    distance = R * c  
+    return distance
 
 def format_distance(distance_meters):
     """
