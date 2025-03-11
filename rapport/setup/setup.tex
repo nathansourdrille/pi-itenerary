@@ -1,0 +1,150 @@
+\documentclass[12pt,a4paper,openright]{report}
+
+% Encodage et langue
+\usepackage[utf8]{inputenc} % Encodage UTF-8
+\usepackage[T1]{fontenc} % Encodage des fontes
+\usepackage[french,english]{babel} % Langues : français et anglais
+
+% Police et espacement
+\usepackage[sc]{mathpazo} % Police Palatino
+\linespread{1.05} % Espacement des lignes
+
+% Couleurs et graphiques
+\usepackage{xcolor} % Gestion des couleurs
+\definecolor{customblue}{RGB}{33,26,82} % Définition de la couleur aaublue
+\usepackage{graphicx} % Inclusion d'images
+\usepackage{wrapfig} % Figures et tableaux enroulés dans le texte
+\usepackage{float} % Interface améliorée pour les objets flottants
+\usepackage{caption} % Personnalisation des légendes
+\captionsetup{%
+  font=footnotesize, % Taille de police des légendes
+  labelfont=bf % Police en gras pour les étiquettes (par ex., Figure 3.2)
+}
+
+% Mise en page et formatage
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry} % Marges du document
+\usepackage{fancyhdr} % En-têtes et pieds de page personnalisés
+\fancyhf{} % Supprimer tous les champs d'en-tête et de pied de page
+\renewcommand{\headrulewidth}{0pt} % Supprimer la ligne horizontale dans l'en-tête
+\fancyhead[RE]{\small\nouppercase\leftmark} % Page paire - titre du chapitre
+\fancyhead[LO]{\small\nouppercase\rightmark} % Page impaire - titre de la section
+\fancyhead[LE,RO]{\thepage} % Numéro de page sur toutes les pages
+\usepackage{lastpage} % Référence au nombre de pages du document
+\pagestyle{fancy}
+\raggedbottom % Ne pas étirer le contenu de la page, insérer de l'espace blanc en bas de la page
+
+% Environnements mathématiques et théorèmes
+\usepackage{amsmath, amsthm, amssymb, amsfonts} % Paquets AMS pour les maths
+\usepackage[framed,amsmath,thmmarks]{ntheorem} % Environnements pour les théorèmes
+
+% Autres utilitaires
+\usepackage{array,booktabs} % Gestion améliorée des tableaux
+\usepackage{framed} % Encadrés pour les parties importantes
+\usepackage{listings} % Formatage et mise en évidence du code source
+\usepackage{courier} % Police Courier pour les listings
+\usepackage{changepage} % Ajuster les marges pour des parties spécifiques de la page
+\usepackage{multicol} % Colonnes multiples
+\usepackage{hyperref} % Hyperliens dans le PDF
+\hypersetup{%
+	pdfpagelabels=true,
+	plainpages=false,
+	pdfauthor={Author(s)},
+	pdftitle={Title},
+	pdfsubject={Subject},
+	bookmarksnumbered=true,
+	colorlinks=true,
+    breaklinks=true,
+    linkcolor=black,
+    citecolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    linkbordercolor={1 1 1},
+	pdfstartview=FitH
+}
+
+% Définition des couleurs
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{0,0.5,0}
+\definecolor{colString}{rgb}{0.62,0.12,0.94}
+\definecolor{INSA_GM}{cmyk}{0.6,0,0,0}
+\definecolor{INSA_GRIS}{cmyk}{0.7,0.6,0.5,0.3}
+\definecolor{INSA_BLEU}{cmyk}{1,0.9,0.1,0}
+
+% Commandes personnalisées
+\newcommand{\insertrefproj}[1]{}
+\newcommand{\refproj}[1]{\renewcommand{\insertrefproj}{\textbf{\color{INSA_GRIS}#1}}}
+
+% Styles de page fancy
+\pagestyle{fancy}
+
+\fancypagestyle{courant}{
+\fancyhf{}
+\setlength{\headheight}{27pt}
+\fancyhead[L]{\raisebox{-2mm}{\includegraphics[width=30mm]{Images/Logo INSA.png}}}
+\fancyhead[C]{}
+\fancyhead[R]{\color{INSA_GRIS}\thepage}
+\fancyfoot[L]{\insertrefproj}
+\fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.2pt}
+}
+
+\fancypagestyle{special}{%
+\pagestyle{courant}
+\fancyfoot{}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{plain}{%
+\fancyhf{}%
+\pagestyle{courant}
+}
+
+% Formatage des titres et sections
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat*{\section}{\normalfont\Large\bfseries}
+\titleformat*{\subsection}{\normalfont\large\bfseries}
+\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
+
+% Autres configurations et paquets
+\setlength{\parindent}{0pt} % Pas d'indentation pour les paragraphes
+\usepackage[contents={},color=gray]{background} % Couleur de fond
+\usepackage{epic,eepic} % Positionnement pour l'image de couverture
+
+% Réduire les espacements des titres de chapitre, trop importants par défaut
+\titlespacing*{\chapter}{0pt}{-25pt}{15pt} % {alinéa}{au-dessus}{en-dessous}
+
+% Espacement des insertions de figures
+\setlength{\textfloatsep}{7pt} % Espace entre le texte et une figure flottante
+\setlength{\intextsep}{7pt} % Espace entre le texte et une figure insérée
+\setlength{\floatsep}{7pt} % Espace entre deux flottants
+\renewcommand{\thefigure}{\arabic{figure}}
+\newcommand{\figcaptionwithsource}[3]{\caption[#1\newline #2]{#1} \addtocontents{lof}{\protect\vspace{1\baselineskip}}}
+\renewcommand{\listfigurename}{}
+\counterwithout{figure}{chapter} % Ne pas réinitialiser le numéro des figures à chaque chapitre
+
+\newcommand{\annexeref}[1]{Voir Annexe \ref{#1}}
+
+% Page vide sans numéro de page
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\pagestyle{empty}\origdoublepage}%
+}
+\let\cleardoublepage\clearemptydoublepage
+
+% Supprimer le numéro de page d'une page
+\usepackage{nopageno}
+
+% Bibliographie et index
+\usepackage[nottoc]{tocbibind}
+
+% Notes à faire
+\usepackage[
+  colorinlistoftodos,
+  textwidth=\marginparwidth, 
+  textsize=scriptsize,
+]{todonotes}
