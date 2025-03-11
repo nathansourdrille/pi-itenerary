@@ -6,10 +6,10 @@ import time
 from ..utils import CSVHandler, Buzzer
 
 # A COMPLETER
-PORT_LIDAR = ...                 # Port USB connecté au LiDAR
+PORT_LIDAR = "/dev/ttyUSB0"                 # Port USB connecté au LiDAR
 PORT_BUZZER = ...                # Port GPIO du buzzer
-MIN_RANGE = ...                  # Portée minimale du LiDAR en mm
-MAX_RANGE = ...                  # Portée maximale du LiDAR en mm
+MIN_RANGE = 150                  # Portée minimale du LiDAR en mm
+MAX_RANGE = 12000                  # Portée maximale du LiDAR en mm
 
 SCAN_SKIP = 3                    # Ignorer X scans pour alléger l'affichage
 LEN_PREVIOUS_SCANS = 3
@@ -98,14 +98,17 @@ class LIDAR():
         Filtre les points de la mesure actuelle en ne conservant que ceux dont la qualité dépasse le seuil défini.
         """
         # A COMPLETER
-        pass
+        self.current_scan=[scan for scan in self.current_scan if scan[0]>=self.quality_threshold]
 
     def filter_angle(self):
         """
         Filtre les points de la mesure actuelle en fonction de la plage d'angle définie.
         """
         # A COMPLETER
-        pass
+        if self.min_angle>self.max_angle:
+                self.current_scan=[scan for scan in self.current_scan if (self.min_angle<scan[1]<360) and (0<scan[1]<self.max_angle)]
+        else:
+                self.current_scan=[scan for scan in self.current_scan if self.min_angle<=scan[1]<=self.max_angle]
 
     def polar_to_cartesian(self):
         """
@@ -113,7 +116,11 @@ class LIDAR():
         """
         # A COMPLETER
         # Les informations du scans sont dans l'objet self.current_scan
-        pass
+        self.x_points=[]
+        self.y_points=[]
+        for scan in self.current_scan:
+                self.x_points.append(scan[2]*np.sin(math.radians(scan[1])))
+                self.y_points.append(scan[2]*np.cos(math.radians(scan[1])))
 
     def get_single_scan(self):
         """

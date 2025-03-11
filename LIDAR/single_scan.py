@@ -3,9 +3,9 @@ import argparse
 from ..utils import CSVHandler
 
 # A COMPLETER
-MIN_ANGLE=...
-MAX_ANGLE=...
-QUALITY_THRESHOLD=...
+MIN_ANGLE=180
+MAX_ANGLE=360
+QUALITY_THRESHOLD=10
 
 if __name__ == '__main__':
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         csv_file.append_row([lidar.get_timestamp(),lidar.get_current_scan(),lidar.get_xy_points()])
         
     # Affichage des points mesurés dans un plan cartésien
-    #lidar.plot_single_scan()
+    lidar.plot_single_scan()
     
     # Arrêt du LiDAR
     print("Arrêt du LiDAR...")

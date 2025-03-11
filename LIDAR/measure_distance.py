@@ -2,9 +2,9 @@ from lidar import LIDAR, PORT_LIDAR, MIN_RANGE, MAX_RANGE
 import argparse
 
 # A COMPLETER
-MIN_ANGLE=...
-MAX_ANGLE=...
-QUALITY_THRESHOLD=...
+MIN_ANGLE=0
+MAX_ANGLE=7
+QUALITY_THRESHOLD=13
 
 if __name__ == '__main__':
 

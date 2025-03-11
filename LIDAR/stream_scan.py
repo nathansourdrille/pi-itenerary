@@ -3,9 +3,9 @@ from ..utils import CSVHandler
 import argparse
 
 # A COMPLETER
-MIN_ANGLE=...
-MAX_ANGLE=...
-QUALITY_THRESHOLD=...
+MIN_ANGLE=0
+MAX_ANGLE=360
+QUALITY_THRESHOLD=13
 
 if __name__ == '__main__':
 
