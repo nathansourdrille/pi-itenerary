@@ -1,7 +1,7 @@
 import time
 import argparse
 from IMU import read_IMU, initialize_sensors
-from ..utils import CSVHandler
+from utils import CSVHandler
 
 def get_imu_data(csv_out=None):
     """
