@@ -18,8 +18,8 @@ def get_position(csv_out=None,no_LCD=False):
   """
   
   # A COMPLETER
-  GNSS_DEVICE_ADDR = ...
-  LCD_DEVICE_ADDR = ...
+  GNSS_DEVICE_ADDR = 0x20
+  LCD_DEVICE_ADDR = 0x27
 
   mode=GPS_BEIDOU_GLONASS
   gnss = GNSS(1, GNSS_DEVICE_ADDR)
@@ -43,8 +43,8 @@ def get_position(csv_out=None,no_LCD=False):
         record.append_row([gnss.timestamp,gnss.utc,gnss.latitude.coords_DD,gnss.longitude.coords_DD])
       
       # A COMPLETER
-      latitude = ...
-      longitude = ...      
+      latitude = gnss.latitude.coordinates_DD
+      longitude = gnss.longitude.coordinates_DD      
       
       # Affichage sur le LCD
       if gnss.reception_ok:
