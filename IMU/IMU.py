@@ -5,7 +5,7 @@ from gyroscope import gyroscope_configuration, read_gyroscope, CTRL2_G
 
 # Adresse I2C du capteur LSM6DSO
 # A COMPLETER
-LSM6DSO_ADDR = ...
+LSM6DSO_ADDR = 0x6b
 
 # Initialisation du bus I2C
 bus = smbus.SMBus(1)

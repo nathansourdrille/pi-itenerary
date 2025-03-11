@@ -13,10 +13,10 @@ def get_imu_data(csv_out=None):
     
     # Paramètres d'acquisition
     # A COMPLETER
-    accel_range = ...
-    accel_freq = ...
-    gyro_range = ...
-    gyro_freq = ...
+    accel_range = 2
+    accel_freq = 6660
+    gyro_range = 250
+    gyro_freq = 6660
 
     # Calculer l'intervalle en secondes (en fonction de la fréquence)
     interval = 1 / min(accel_freq,gyro_freq)
