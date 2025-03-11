@@ -50,7 +50,7 @@ def get_position(csv_out=None,no_LCD=False):
       if gnss.reception_ok:
         if not(no_LCD):
           # A COMPLETER
-          lcd_display.afficher(...)
+          lcd_display.afficher(str(latitude)[0:7]+' '+str(longitude)[0:7])
       else:
         if not(no_LCD):
           lcd_display.afficher("Recherche de    signal GNSS...")
