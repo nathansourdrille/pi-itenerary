@@ -1,5 +1,5 @@
 from lidar import LIDAR, PORT_LIDAR, MIN_RANGE, MAX_RANGE
-from ..utils import CSVHandler
+from utils import CSVHandler
 import argparse
 
 # A COMPLETER
@@ -24,14 +24,14 @@ if __name__ == '__main__':
                   max_range=MAX_RANGE,
                   min_angle=MIN_ANGLE,
                   max_angle=MAX_ANGLE)
-    
+
     print("Démarrage du LiDAR...")
     lidar.start()
-    
+
     # Scan en continu et affichage dynamique des mesures
     try:
         lidar.get_stream_scan(args.save_path)
-        
+
     except KeyboardInterrupt:
         print("Arrêt du scan par l'utilisateur.")
 

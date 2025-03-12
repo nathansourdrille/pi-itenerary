@@ -1,22 +1,22 @@
 import time
 from gnss import *
-from ..utils import *
+from utils import *
 import argparse
 
 def compute_distance(pt1,pt2):
     """
     Calcul de la distance entre 2 points en coordonnées latitude/longitude.
-    
+
     Arguments:
     - pt1: tuple des coordonnées du 1er point (latitude/longitude).
     - pt2: tuple des coordonnées du 2ème point (latitude/longitude).
 
     Sortie: La distance en mètre entre les 2 points en vol d'oiseau sur la surface de la Terre (sphérique).
     """
-    
+
     # A COMPLETER
-    R = 6371000  
-    
+    R = 6371000
+
     # Conversion des coordonnées en radians
     lat1, lon1 = map(math.radians, pt1)
     lat2, lon2 = map(math.radians, pt2)
@@ -30,7 +30,7 @@ def compute_distance(pt1,pt2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     # Distance finale en mètres
-    distance = R * c  
+    distance = R * c
     return distance
 
 def format_distance(distance_meters):
@@ -64,7 +64,7 @@ def get_distance(position_target):
   Arguments:
   - position_target: Tuple indiquant la position du point d'intérêt (latitude et longitude en degrés décimaux).
   """
-  
+
   # A COMPLETER
   GNSS_DEVICE_ADDR = 0x20
   LCD_DEVICE_ADDR = 0x27
@@ -74,43 +74,42 @@ def get_distance(position_target):
   gnss.initialisation(mode)
 
   lcd_display = LCD(LCD_DEVICE_ADDR)
-  
+
   try:
     while True:
       # Actualisation des données GNSS
       gnss.update()
 
-      # Calcul de la distance à la target      
+      # Calcul de la distance à la target
       distance = format_distance(compute_distance(position_target,(gnss.latitude.coords_DD,gnss.longitude.coords_DD)))
-      
+
       # Affichage sur le LCD
       if gnss.reception_ok:
         lcd_display.afficher(f"Distance:       {distance}")
       else:
         lcd_display.afficher("Recherche de    signal GNSS...")
-      
+
       # Affichage sur console
       if gnss.reception_ok:
         print("--------------------------------------------------------------")
         print(f"Distance de la target: {distance}")
         print("")
-        
+
       time.sleep(1)
-      
+
   except KeyboardInterrupt as e:
     print("Arrêt du programme")
     lcd_display.effacer()
-        
+
 if __name__ == "__main__":
     # Instantiate the parser
     parser = argparse.ArgumentParser()
-    parser.add_argument('latitude', 
+    parser.add_argument('latitude',
                         type=float,
                         help="Latitude du point d'intérêt (en degrés décimaux)")
-    parser.add_argument('longitude', 
+    parser.add_argument('longitude',
                         type=float,
                         help="Longitude du point d'intérêt (en degrés décimaux)")
     args = parser.parse_args()
-	
-    get_distance((args.latitude,args.longitude))
 
+    get_distance((args.latitude,args.longitude))

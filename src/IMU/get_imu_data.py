@@ -10,7 +10,7 @@ def get_imu_data(csv_out=None):
     Arguments:
     - csv_out: le chemin du fichier CSV d'enregistrement (si définit à None, aucun enregistrement n'est effectué)
     """
-    
+
     # Paramètres d'acquisition
     # A COMPLETER
     accel_range = 2
