@@ -1,18 +1,31 @@
-# à faire
-[] faire acquisitions différents paramètres (fréquences IMU)
-[] faire acquisitions intérieurs/extérieurs
-[] faire acquisitions sur meme trajet
-[] acquisitions latitude/longitude constantes
-[] acquisitions immobiles
+# Tâches à réaliser
 
-Test du chi2 pour prouver intérieur pire que extérieur
-Prouver que le tel est une bonne référence
+## Acquisitions
+- [ ] Acquisitions avec différents paramètres (fréquences IMU)
+- [ ] Acquisitions en intérieur et en extérieur
+- [ ] Acquisitions sur le même trajet
+- [ ] Acquisitions avec latitude/longitude constantes
+- [ ] Acquisitions immobiles
 
-Pour le rapport
-La démarche
+## Analyses et tests
+- [ ] Test du khi² pour prouver que l'intérieur est pire que l'extérieur
+- [ ] Prouver que le téléphone est une bonne référence
 
-Comment traiter valeurs aberrantes
-Débruiter, filtrer
-Filtre de Kalman
+---
 
-Détection de l'intérieur en fonction de la différence TEL / GPS
+# Points importants
+
+## Pour le rapport
+- Détailler la démarche adoptée
+
+---
+
+# Recherches à effectuer
+- Comment traiter les valeurs aberrantes
+- Techniques de débruitage et filtrage
+- Utilisation du filtre de Kalman
+
+---
+
+# Pistes pour aller plus loin
+- Détection de l'intérieur en fonction de la différence entre les données du téléphone et du GPS
