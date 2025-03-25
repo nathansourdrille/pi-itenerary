@@ -1,10 +1,11 @@
 # Adresses I2C et USB des composants
 PORT_LIDAR = ...                 # Port USB connecté au LiDAR
 PORT_BUZZER = ...                # Port GPIO du buzzer
-LSM6DSO_ADDR = ...               # Adresse I2C du capteur LSM6DSO (Accéléromètre/Gyroscope)
+LSM6DSO_ADDR = 0x6b               # Adresse I2C du capteur LSM6DSO (Accéléromètre/Gyroscope)
 LIS3MDL_ADDR = 0x1E               # Adresse I2C du capteur LIS3MDL (Magnétomètre)
-GNSS_DEVICE_ADDR = ...           # Adresse I2C du module GNSS
-LCD_DEVICE_ADDR = ...            # Adresse I2C de l'écran LCD
+GNSS_DEVICE_ADDR = 0x20           # Adresse I2C du module GNSS
+LCD_DEVICE_ADDR = 0x27
+            # Adresse I2C de l'écran LCD
 
 # Constantes des registres du GNSS
 I2C_START_GET = 29
@@ -25,12 +26,12 @@ BEIDOU_GLONASS = 6
 GPS_BEIDOU_GLONASS = 7
 
 # Constantes des registres de configuration de l'IMU
-CTRL1_XL = ...                   # Registre de configuration de l'accéléromètre
-CTRL2_G = ...                    # Registre de configuration du gyroscope
+CTRL1_XL = 0x10                   # Registre de configuration de l'accéléromètre
+CTRL2_G = 0x11                    # Registre de configuration du gyroscope
 CTRL_REG1 = 0x20                  # Registre de configuration du magnétomètre (fréquence d'acquisition)
 CTRL_REG2 = 0x21                  # Registre de configuration du magnétomètre (plage d'acquisition)
-OUTX_L_A = ...                   # Registre de lecture de l'accéléromètre
-OUTX_L_G = ...                   # Registre de lecture du gyroscope
+OUTX_L_A = 0x28                   # Registre de lecture de l'accéléromètre
+OUTX_L_G = 0x22                   # Registre de lecture du gyroscope
 OUT_X_L = 0x28                    # Registre de lecture du magnétomètre
 
 # Constantes de configuration du LiDAR

@@ -17,7 +17,7 @@ class struct_utc_time:
     self.hour=0
     self.minute=0
     self.second=0
-  
+
   def update_utc_time(self,rslt):
     """
     Met à jour la date et l'heure.
@@ -28,18 +28,18 @@ class struct_utc_time:
     if rslt != -1:
       self.year = rslt[0]*256 + rslt[1]
       self.month = rslt[2]
-      self.date = rslt[3]    
+      self.date = rslt[3]
       self.hour = rslt[4]
       self.minute = rslt[5]
       self.second = rslt[6]
-      
+
   def __str__(self):
     """
     Renvoie une chaîne de caractères formatée de la date et l'heure.
 
     Sortie: Une chaîne de caractère formatée.
     """
-    return f"{self.year:04}/{self.month:02}/{self.date:02} - {self.hour:02}:{self.minute:02}:{self.second:02}" 
+    return f"{self.year:04}/{self.month:02}/{self.date:02} - {self.hour:02}:{self.minute:02}:{self.second:02}"
 
 class struct_GNSS_coordinate:
   """
@@ -56,7 +56,7 @@ class struct_GNSS_coordinate:
     self.coordinates_DD = 0.00 # Coordonnées au format degré décimaux
     self.coordinates_DMM = "0.00" # Coordonnées au format degré / minute décimales
     self.coordinates_DMS = "0.00" # Coordonnées au format degré décimaux / minutes / secondes
-  
+
   def update_coordinate(self,rslt):
     """
     Met à jour la coordonnée.
@@ -66,12 +66,17 @@ class struct_GNSS_coordinate:
       self.minutes = rslt[1]
       self.fractions_minutes = rslt[2]*65536 + rslt[3]*256 + rslt[4]
       self.direction = chr(rslt[5])
-      
+
       # A compléter
-      self.coordinates_DD = ...
-      self.coordinates_DMM = ...
-      self.coordinates_DMS = ...
-  
+      self.coordinates_DMM = str(self.degres)+'°'+str(self.minutes)+'.'+str(self.fractions_minutes)+"'"+str(self.direction)
+      decimal_part=self.fractions_minutes/60.0
+      self.coordinates_DD = self.degres+self.minutes/60.0+decimal_part*10**-5
+      if self.direction=='S':
+          self.coordinates_DD=-self.coordinates_DD
+      if self.direction == 'W':
+           self.coordinates_DD=-self.coordinates_DD
+      self.coordinates_DMS = (f"{self.degres}°{self.minutes}'{round(self.fractions_minutes * 60 / 65536, 2)}\"{self.direction}")
+
 class GNSS:
   """
   Classe pour la gestion des acqusitions du GNSS.
@@ -95,10 +100,10 @@ class GNSS:
     self.COG = 0
     self.SOG = 0
     self.reception_ok=False
-    
+
   def begin(self):
     """
-    Initialise la connexion au capteur GNSS.   
+    Initialise la connexion au capteur GNSS.
     """
     rslt = self._read_reg(I2C_ID, 1)
     time.sleep(0.1)
@@ -117,16 +122,16 @@ class GNSS:
 
   def disable_power(self):
     """
-    Désactive la récupération des données GNSS. 
+    Désactive la récupération des données GNSS.
     """
     self._write_reg(I2C_SLEEP_MODE, [1])
     time.sleep(0.1)
-  
+
   def get_mode(self):
     """
     Retourne le mode GNSS utilisé.
-    
-    Sortie: le mode GNSS utilisé.  
+
+    Sortie: le mode GNSS utilisé.
     """
     rslt = self._read_reg(I2C_GNSS_MODE, 1)
     return rslt[0]
@@ -134,17 +139,17 @@ class GNSS:
   def set_mode(self, mode):
     """
     Actualise le mode GNSS du capteur.
-    
+
     Arguments:
     - mode: le mode GNSS.
     """
     self._write_reg(I2C_GNSS_MODE, [mode])
-    time.sleep(0.1) 
-    
+    time.sleep(0.1)
+
   def initialisation(self,mode):
     """
     Initialise le module GNSS avant acquisition.
-    
+
     Arguments:
     - mode: le mode GNSS.
     """
@@ -220,7 +225,7 @@ class GNSS:
   def get_gnss_len(self):
     """
     Retourne la longueur des données GNSS reçues.
-    
+
     Sortie: la longueur des données GNSS.
     """
     self._write_reg(I2C_START_GET, [0x55])
@@ -239,7 +244,7 @@ class GNSS:
     time.sleep(0.1)
     all_data = [0]*(len+1)
     len1 = (len) // 32
-    len2 = ((len)%32) 
+    len2 = ((len)%32)
     for num in range (0, len1+1):
       if num == len1:
         rslt = self._read_reg(I2C_ALL_DATA, len2)
