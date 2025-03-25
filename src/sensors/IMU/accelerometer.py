@@ -6,7 +6,7 @@ def accelerometer_configuration(accel_range, accel_freq):
     """
     Configure les paramètres du LSM6DSO pour l'accéléromètre.
 
-    Arguments: 
+    Arguments:
     - accel_range: la range de l'accélérateur
     - accel_freq: la fréquence d'acquisition de l'accélérateur
 
@@ -14,14 +14,13 @@ def accelerometer_configuration(accel_range, accel_freq):
     """
     # Configuration de l'accéléromètre
     # A COMPLETER
-    ...
-    return 0
+    return (DICT_FREQ[accel_freq] * 2**4 + DICT_RANGE[accel_range] * 2**2)
 
 def read_accelerometer(device_addr, accel_range):
     """
     Lit les données de l'accéléromètre et les convertit.
 
-    Arguments: 
+    Arguments:
     - device_addr: l'adresse I2C du composant
     - accel_range: la range de l'accéléromètre
 
@@ -31,5 +30,5 @@ def read_accelerometer(device_addr, accel_range):
     x, y, z = read_raw_data(device_addr, OUTX_L_A)
 
     # A COMPLETER
-    sensitivity = ...
+    sensitivity = DICT_RANGE_FACTOR[accel_range]/1000
     return x * sensitivity, y * sensitivity, z * sensitivity
