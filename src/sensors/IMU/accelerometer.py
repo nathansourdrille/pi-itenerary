@@ -2,6 +2,10 @@ import smbus
 import time
 from config import OUTX_L_A
 
+DICT_FREQ = {12.5 : 0b0001 , 26 : 0b0010 , 52 : 0b0011 , 104 : 0b0100, 208 : 0b0101, 416 :0b0110, 833 : 0b0111, 1660 : 0b1000, 3330 : 0b1001, 6660 : 0b1010 }
+DICT_RANGE = {2 : 0b00, 4 : 0b10, 8 : 0b11, 16 : 0b01}
+DICT_RANGE_FACTOR = {2:0.061,4:0.122,8:0.244,16:0.488}
+
 def accelerometer_configuration(accel_range, accel_freq):
     """
     Configure les paramètres du LSM6DSO pour l'accéléromètre.
