@@ -69,3 +69,30 @@ CONFIG_MAG_SENSITIVITY = {
     12: 2281,   # LSB/gauss
     16: 1711,  # LSB/gauss
 }
+
+CONFIG_ACCELEROMETER_FREQ = {
+    12.5 : 0b0001 ,
+    26 : 0b0010 ,
+    52 : 0b0011 ,
+    104 : 0b0100,
+    208 : 0b0101,
+    416 :0b0110,
+    833 : 0b0111,
+    1660 : 0b1000,
+    3330 : 0b1001,
+    6660 : 0b1010 }
+
+CONFIG_ACCELEROMETER_RANGE = {
+    2 : 0b00,
+    4 : 0b10,
+    8 : 0b11,
+    16 : 0b01}
+
+DICT_RANGE_FACTOR = {2:0.061,4:0.122,8:0.244,16:0.488}
+
+CONFIG_GYRO_RANGE = {
+    250 : 0b00,
+    500 : 0b01,
+    1000 : 0b10,
+    2000 : 0b11
+}
