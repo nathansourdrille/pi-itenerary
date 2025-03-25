@@ -13,8 +13,8 @@ from core.imu_acquisition import get_imu_data
 import time
 
 # Dossiers prédéfinis pour les sauvegardes
-GNSS_SAVE_DIR = "data/gnss"
-IMU_SAVE_DIR = "data/imu"
+GNSS_SAVE_DIR = "../results/acquisitionsGPS/"
+IMU_SAVE_DIR = "../results/acquisitionsIMU/"
 
 def ensure_dir_exists(directory):
     """Crée le dossier s'il n'existe pas"""
@@ -57,8 +57,8 @@ if __name__ == "__main__":
         timestamp = time.strftime("%Y%m%d_%H%M%S")
         filename = f"{args.base_filename}_{timestamp}" if args.base_filename else timestamp
 
-        gnss_save_path = os.path.join(GNSS_SAVE_DIR, f"../results/acquisitionsGPS/{filename}_gnss.csv")
-        imu_save_path = os.path.join(IMU_SAVE_DIR, f"../results/acquisitionsIMU/{filename}_imu.csv")
+        gnss_save_path = os.path.join(GNSS_SAVE_DIR, f"{filename}_gnss.csv")
+        imu_save_path = os.path.join(IMU_SAVE_DIR, f"{filename}_imu.csv")
 
     # Création des processus
     gnss_process = Process(
