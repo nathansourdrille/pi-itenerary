@@ -1,11 +1,11 @@
 \input{setup/setup}
 \input{setup/error}
 \input{setup/macros}
-
 \title{MyTemplate}
 \refproj{Template}
 \author{Paul Fougeray}
-\date{June 2024}
+\date{Avril 2025}
+
 
 \begin{document}
 \input{sections/coverPage}
@@ -14,58 +14,21 @@
 
 % Table des matières
 \tableofcontents
-
-% Introduction
-\chapter{Introduction}
+%Hiérarchie
 \setcounter{page}{1}
 \thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
+\input{sections/Introduction}
+\input{sections/Presentation_des_capteurs}
+\input{sections/Presentation_systeme_acquisition}
+\input{sections/Analyse_performance_systeme}
+\input{sections/Conclusion}
 
-Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en LaTeX.
-
-% Section avec équations mathématiques
-\section{Équations mathématiques}
-
-Voici une équation mathématique simple :
-\begin{equation}
-    E = mc^2\times\displaystyle{\sum_{n=1}^N{k^n}}
-\end{equation}
-
-% Section avec une figure
-\section{Insertion de figures}
-
-Voici une figure insérée dans le texte (Figure \ref{fig:example}).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{example-image-b}
-    \caption{Exemple de figure}
-    \label{fig:example}
-\end{figure}
-
-\chapter{2}
-\thispagestyle{courant}
-% Section avec une liste de tâches
-\section{Liste de tâches}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{example-image-c}
-    \caption{Exemple de figure}
-    \label{fig:example}
-\end{figure}
-
-Voici quelques tâches à accomplir :
-\begin{itemize}
-    \item Réviser la section sur les équations mathématiques.
-    \item Ajouter des références bibliographiques.
-    \item Finaliser la mise en page des figures.
-\end{itemize}
 
 % Section avec une citation et des références
+
+
 \section{Citations et références}
 
-Selon Einstein \cite{einstein1905}, l'équation $E = mc^2$ est fondamentale.
-Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en LaTeX.\footnote{Une note de bas de page ajoutée pour illustrer l'utilisation des notes de bas de page.}
 
 % Appliquer le style d'en-tête spécifique à cette page
 
@@ -79,11 +42,9 @@ Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en 
 
 % Annexes
 \appendix
-\chapter{Test}
 \thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
 
-Contenu de l'annexe A.
-
+Contenu de l'annexe A .
 % Liste des figures
 \listoffigures
 \thispagestyle{courant}

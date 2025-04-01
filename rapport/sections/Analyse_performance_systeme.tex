@@ -1,0 +1,87 @@
+\chapter{Analyse des performances du système d'acquisition}
+\section{Méthodologie pour la détermination du paramétrage du système d'acquisition}
+\section{Description et analyse du choix des méthodes statistiques avec les résultats obtenus}
+\section{Analyse des résultats de tracking obtenus}
+
+\subsection{Mouvement extérieur 1}
+
+\subsubsection{Comparaison des trajets}
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=400pt, width = 500pt]{../traitements/mouvement_exterieur1/comparaison_trajets}
+    \caption{Comparaison trajet mouvement extérieur 1 (Gps vs Téléphone)}
+    \label{fig: Comparaison trajet mouvement exterieur 1}
+\end{figure}
+
+Dans cette exemple, on a fait deux tours à l'extérieur et on remarque qu'en prenant les données du téléphone comme repère. Le GPS qu'on utilise n'est pas
+trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
+
+\subsubsection{Comparaison latitude  et longitude}
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[height = 300pt, width=\linewidth]{../traitements/mouvement_exterieur1/comparaison_latitude}
+        \caption{ Comparaison latitude (Gps vs Téléphone) }
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[height = 300pt , width=\linewidth]{../traitements/mouvement_exterieur1/comparaison_longitude}
+        \caption{ Comparaison longitude (Gps vs Téléphone)}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{Boite à moustache vitesse / accéleration}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=250pt, width = \linewidth]{../traitements/immobile_exterieur2/boxplots_vitesse_acceleration}
+    \caption{Boite à moustache }
+    \label{fig: Boxplot}
+\end{figure}
+
+
+\subsubsection{Evolution de l'erreur }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=300pt, width = 400pt]{../traitements/immobile_exterieur2/erreur_evolution}
+    \caption{ Evolution de l'erreur en cours du temps }
+    \label{fig: erreur_evolution }
+\end{figure}
+
+
+\subsubsection{Valeurs aberrantes}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=250pt, width = \linewidth]{../traitements/immobile_exterieur2/valeurs_aberrantes}
+    \caption{ Valeurs aberrantes}
+    \label{fig: Valeurs aberrantes}
+\end{figure}
+
+
+
+
+
+
+\section{Analyse des résultats obtenus en cas de défaillance capteur}
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=400pt, width = 500pt]{../traitements/immobile_exterieur1/comparaison_trajets}
+    \caption{Comparaison trajet immobile exterieur 1 (Gps vs Téléphone)}
+    \label{fig: Comparaison trajet immobile exterieur 1}
+\end{figure}
+On remarque que même à l'extérieur, les acquisitions du gps et du téléphone ne sont pas assez précises. Le trajet nous indique qu'on était en mouvement même
+si on était immobile.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=400pt, width = 500pt]{../traitements/immobile_exterieur2/comparaison_trajets}
+    \caption{Comparaison trajet immobile exterieur 2 (Gps vs Téléphone)}
+    \label{fig: Comparaison trajet immobile exterieur 2}
+\end{figure}
+
+Ici, on peut remarquer que les données fournies par le téléphone sont beaucoup plus précises que les données fournies. En effet, on ne peut pas se fier
+aux données du GPS. (à conclure après je sais pas voir avec la démarche etc)
