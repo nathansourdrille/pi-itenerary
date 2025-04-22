@@ -2,12 +2,21 @@
 \input{setup/error}
 \input{setup/macros}
 
+% Fix for ntheorem conflict
+\makeatletter
+\let\c@theorem\relax
+\makeatother
+
+% Fix for todonotes margin warning
+\setlength{\marginparwidth}{2cm}
+
 \title{MyTemplate}
 \refproj{Template}
 \author{Paul Fougeray}
 \date{June 2024}
 
 \begin{document}
+
 \input{sections/coverPage}
 \input{sections/colophon}
 \input{sections/titlepage}
@@ -18,7 +27,7 @@
 % Introduction
 \chapter{Introduction}
 \setcounter{page}{1}
-\thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
+\thispagestyle{courant}
 
 Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en LaTeX.
 
@@ -27,7 +36,7 @@ Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en 
 
 Voici une équation mathématique simple :
 \begin{equation}
-    E = mc^2\times\displaystyle{\sum_{n=1}^N{k^n}}
+    E = mc^2 \times \displaystyle{\sum_{n=1}^N{k^n}}
 \end{equation}
 
 % Section avec une figure
@@ -42,8 +51,16 @@ Voici une figure insérée dans le texte (Figure \ref{fig:example}).
     \label{fig:example}
 \end{figure}
 
-\chapter{2}
+\clearpage
+\listoffigures
 \thispagestyle{courant}
+
+% Nouveau chapitre
+\chapter{Tâches et Références}
+\thispagestyle{courant}
+
+\input{sections/kalman}
+
 % Section avec une liste de tâches
 \section{Liste de tâches}
 
@@ -51,7 +68,7 @@ Voici une figure insérée dans le texte (Figure \ref{fig:example}).
     \centering
     \includegraphics[width=0.5\textwidth]{example-image-c}
     \caption{Exemple de figure}
-    \label{fig:example}
+    \label{fig:example2}
 \end{figure}
 
 Voici quelques tâches à accomplir :
@@ -67,26 +84,38 @@ Voici quelques tâches à accomplir :
 Selon Einstein \cite{einstein1905}, l'équation $E = mc^2$ est fondamentale.
 Ce document présente un exemple d'utilisation de plusieurs fonctionnalités en LaTeX.\footnote{Une note de bas de page ajoutée pour illustrer l'utilisation des notes de bas de page.}
 
-% Appliquer le style d'en-tête spécifique à cette page
-
 \begin{thebibliography}{9}
     \thispagestyle{courant}
     \bibitem{einstein1905}
-    Einstein, A.
-    \textit{Does the Inertia of a Body Depend Upon Its Energy Content?},
+    Albert Einstein.
+    \textit{Zur Elektrodynamik bewegter Körper}.
     Annalen der Physik, 1905.
+
+    \bibitem{kalmanPDF}
+    Stéphane Calderon, Floris Chabert.
+    \textit{Filtrage de Kalman appliqué à une centrale inertielle multi-capteurs},
+    École Nationale Supérieure des Télécommunications, Paris.
+    \textit{Disponible à:} \url{https://igns.wdfiles.com/local--files/filtre-de-kalman/Kalman.pdf},
+    (Consulté le 01/04/2025).
+
+    \bibitem{wikip_jacobienne}
+    \textit{Matrice jacobienne},
+    Wikipédia, l'encyclopédie libre.
+    \textit{Disponible à:} \url{https://fr.wikipedia.org/wiki/Matrice_jacobienne},
+    (Consulté le 01/04/2025).
+
+    \bibitem{wikip_kalman}
+    \textit{Filtre de Kalman},
+    Wikipédia, l'encyclopédie libre.
+    \textit{Disponible à:} \url{https://fr.wikipedia.org/wiki/Filtre_de_Kalman},
+    (Consulté le 01/04/2025).
 \end{thebibliography}
 
 % Annexes
 \appendix
-\chapter{Test}
-\thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
+\chapter{Annexe A}
+\thispagestyle{courant}
 
 Contenu de l'annexe A.
 
-% Liste des figures
-\listoffigures
-\thispagestyle{courant}
-
 \end{document}
-

@@ -1,0 +1,74 @@
+\begin{align}
+    \omega_{x,k+1} &= \omega_{x,k} + \dot{\omega}_{x,k} \, \Delta t \\
+    \omega_{y,k+1} &= \omega_{y,k} + \dot{\omega}_{y,k} \, \Delta t \\
+    \omega_{z,k+1} &= \omega_{z,k} + \dot{\omega}_{z,k} \, \Delta t
+\end{align}
+
+Conditions initiales :
+\begin{equation}
+\omega_{x,0}, \quad \omega_{y,0}, \quad \omega_{z,0} \quad \text{calculés à } t = 0
+\end{equation}
+
+Ces valeurs sont obtenues grâce au magnétomètre.
+
+\section*{Données disponibles}
+Dans le cadre de ce projet, les données accessibles sont les suivantes :
+\begin{itemize}
+    \item \textbf{Position GPS :}
+    \begin{itemize}
+        \item $\boldsymbol{\theta}$ : longitude (coordonnée est-ouest)
+        \item $\boldsymbol{\lambda}$ : latitude (coordonnée nord-sud)
+    \end{itemize}
+
+    \item \textbf{Données de l'IMU (Inertial Measurement Unit) :}
+    \begin{itemize}
+        \item \textbf{Accéléromètre :} Mesures d'accélération linéaire
+        \begin{itemize}
+            \item $\mathbf{a}_x$ : accélération selon l'axe $x$
+            \item $\mathbf{a}_y$ : accélération selon l'axe $y$
+            \item $\mathbf{a}_z$ : accélération selon l'axe $z$
+        \end{itemize}
+
+        \item \textbf{Gyroscope :} Mesures de vitesse angulaire
+        \begin{itemize}
+            \item $\boldsymbol{\dot{\omega}}_x$ : vitesse angulaire autour de l'axe $x$ (roulis)
+            \item $\boldsymbol{\dot{\omega}}_y$ : vitesse angulaire autour de l'axe $y$ (tangage)
+            \item $\boldsymbol{\dot{\omega}}_z$ : vitesse angulaire autour de l'axe $z$ (lacet)
+        \end{itemize}
+
+        \item \textbf{Magnétomètre :} Mesures du champ magnétique terrestre
+        \begin{itemize}
+            \item $\mathbf{m}_x$ : composante selon l'axe $x$
+            \item $\mathbf{m}_y$ : composante selon l'axe $y$
+            \item $\mathbf{m}_z$ : composante selon l'axe $z$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Remarques}
+\begin{itemize}
+    \item Les données GPS ($\theta$, $\lambda$) donnent la position absolue, mais avec une précision limitée (erreur de quelques mètres).
+    \item Les données de l'IMU fournissent des mesures inertielles précises à court terme, mais sujettes à une dérive temporelle (erreur qui s'accumule), de plus l'accélération s'exprime dans le repère de l'IMU lui-même et pas dans un repère terrestre.
+    \item Le magnétomètre permet de s'orienter par rapport au nord magnétique, mais peut être perturbé par des interférences locales.
+\end{itemize}
+
+\section*{Premier modèle basique}
+En raison de la nature instable de certains de nos composants nous serions tentés de créer des modèles de filtre de Kalman compliqués afin de pouvoir corriger les différentes erreurs qui s'accumulent. Mais pour débuter nous souhaitons faire un modèle simple, linéaire qui ne nécessite pas l'utilisation d'un filtre de Kalman étendu.
+
+\subsection*{Rappel filtre de Kalman}
+En statistique et en théorie du contrôle, le filtre de Kalman est un filtre à réponse impulsionnelle infinie qui estime les états d'un système dynamique à partir d'une série de mesures incomplètes ou bruitées \cite{wikip_kalman}.
+
+Le filtre de Kalman en contexte discret est un estimateur récursif : l'état courant est estimé à partir de l'estimation de l'état précédent et des mesures actuelles. Le filtre de Kalman suppose que le processus discret réel $\mathbf{x}_{k}$ (où $k$ dénote l'indice de temps), suit la loi d'évolution linéaire suivante :
+\[
+x_{k} = F_{k}x_{k-1} + G_{k}u_{k} + w_{k}
+\]
+
+On a :
+\begin{itemize}
+    \item $\mathbf{F}_k$ : la matrice de transition entre l'état $k-1$ et l'état $k$
+    \item $\mathbf{u}_k$ : la commande d'entrée
+    \item $\mathbf{G}_k$ : la matrice de contrôle reliant $\mathbf{u}_k$ et $\mathbf{x}_k$
+    \item $\mathbf{w}_{k}$ : est le bruit d'évolution, gaussien centré et de matrice de covariance $\mathbf{Q}_{k}$.
+\end{itemize}
+
+À partir de cet état on obtient $\mathbf{y}_k$ notre vecteur d'observation à l'instant $k$.
