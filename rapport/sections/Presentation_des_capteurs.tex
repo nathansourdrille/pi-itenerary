@@ -1,11 +1,61 @@
 \chapter{Présentation des capteurs à notre disposition}
-Cette partie est faitre pour présenter les capteurs qu'on a vus en TP
+Cette partie a pour but de présenter les capteurs que nous avons utilisés lors des travaux pratiques.
+
 \section{Description et fonctionnement}
+
+\subsection{GPS}
+Le capteur GPS (Global Positioning System) permet d'obtenir la position géographique d’un objet en temps réel à l’aide de signaux satellites. Il fournit typiquement des données de latitude, longitude, altitude, vitesse et temps. Ce capteur est essentiel pour le suivi de trajectoire.
+
+\subsection{Accéléromètre}
+L'accéléromètre mesure les accélérations linéaires suivant les trois axes X, Y et Z. Il permet de détecter les mouvements, les chocs, et d’estimer l’orientation d’un objet (par exemple, inclinaison) lorsqu’il est combiné avec d’autres capteurs.
+
+\subsection{Gyroscope}
+Le gyroscope mesure la vitesse angulaire de rotation autour des trois axes. Il est souvent utilisé pour suivre l’orientation d’un objet en mouvement, en particulier dans les systèmes d’asservissement ou de navigation inertielle.
+
+\subsection{Magnétomètre}
+Le magnétomètre détecte le champ magnétique terrestre et fonctionne comme une boussole numérique. Il permet de déterminer l’orientation absolue par rapport au nord magnétique. Il est souvent combiné au gyroscope pour améliorer la précision de l’orientation.
+
 \section{Avantages et inconvénients}
-\section{Sources de bruitages et/ou défaults techniques}
+Chaque capteur présente des avantages et des limites :
+\begin{itemize}
+    \item \textbf{GPS} : Bonne précision sur la position à grande échelle, mais latence élevée et faible fréquence d’échantillonnage. Inefficace en intérieur.
+    \item \textbf{Accéléromètre} : Précis pour les mouvements rapides, mais sensible au bruit et aux erreurs d’intégration.
+    \item \textbf{Gyroscope} : Très réactif pour détecter les rotations, mais dérive dans le temps sans recalibrage.
+    \item \textbf{Magnétomètre} : Utile pour connaître l’orientation absolue, mais perturbé par les champs magnétiques ambiants.
+\end{itemize}
+
+\section{Sources de bruitages et/ou défauts techniques}
+Les capteurs sont sujets à différents types de bruits :
+\begin{itemize}
+    \item \textbf{GPS} : erreurs dues à la météo, aux obstacles (bâtiments), et aux multipaths.
+    \item \textbf{Accéléromètre et gyroscope} : bruit thermique, erreurs de biais, et dérive.
+    \item \textbf{Magnétomètre} : perturbations électromagnétiques, présence de métaux ferromagnétiques proches.
+\end{itemize}
+
 \section{Calibration effectuée}
+
 \subsection{Démarche}
+La calibration vise à réduire les erreurs systématiques. Pour l’accéléromètre et le gyroscope, nous avons mesuré les valeurs à l’arrêt pour corriger les biais. Pour le magnétomètre, une procédure de calibration en huit (figure en 8) a été utilisée pour ajuster les axes.
+
 \subsection{Expérimentations}
+Nous avons relevé les valeurs brutes dans différentes orientations et positions. Les écarts ont permis d’ajuster les offsets et les gains.
+
 \subsection{Résultats}
+Les données corrigées présentent une réduction notable du biais et une meilleure cohérence des mesures, notamment lors des déplacements rectilignes ou rotations contrôlées.
+
 \section{Choix des paramètres d'acquisition}
+Les paramètres ont été choisis pour équilibrer précision et consommation :
+\begin{itemize}
+    \item GPS : 1 Hz, suffisant pour les déplacements lents.
+    \item Accéléromètre et gyroscope : 50 Hz pour bien suivre les mouvements.
+    \item Magnétomètre : 10 Hz, suffisant pour détecter l’orientation.
+\end{itemize}
+
 \section{Filtrage des signaux bruts}
+Pour améliorer la qualité des données :
+\begin{itemize}
+    \item \textbf{Filtrage passe-bas} sur les données d'accéléromètre et gyroscope pour réduire le bruit haute fréquence.
+    \item \textbf{Filtre de Kalman} (ou complémentaire) pour fusionner les données de plusieurs capteurs (IMU).
+    \item \textbf{Moyennes glissantes} pour lisser les données GPS.
+\end{itemize}
+
