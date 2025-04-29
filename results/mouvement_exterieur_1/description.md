@@ -1,10 +1,10 @@
-Acquisition en mouvement en extérieur
-Date : 25/03, 16h
-Temps : beau temps, ciel dégagé
+Acquisition en exterieur
+Date : 22/04, 16h31
+Temps : éclaircies
 Paramètres IMU : 
-	accel_range = 4
-	accel_freq = 208
-	gyro_range = 500
-	gyro_freq = 208
-	magneto_range = 8
-	magneto_freq = 20
+	accel_range = 2
+	accel_freq = 12.5
+	gyro_range = 250
+	gyro_freq = 12.5
+	magneto_range = 4
+	magneto_freq = 0.625
