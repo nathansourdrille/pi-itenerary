@@ -1,24 +1,22 @@
 \section{Filtrage des signaux bruts}
 
-Pour filtrer nos données, nous avons mis en place le filtre de Kalman.
+Le filtrage des données brutes consiste à effectuer un prétraitement afin d'améliorer la qualité des signaux issus des capteurs. L'objectif principal est de garantir la cohérence des acquisitions et de supprimer les valeurs aberrantes (outliers) susceptibles de fausser les analyses ou traitements ultérieurs.
 
-\subsection{Présentation du filtre de Kalman}
+\subsection{Synchronisation des signaux}
 
-Le filtre de Kalman est un algorithme récursif d’estimation d’état, largement utilisé dans les systèmes de navigation, de robotique et de traitement du signal. Il permet de combiner les mesures provenant de différents capteurs tout en tenant compte de leurs incertitudes respectives, afin d’obtenir une estimation plus fiable et plus précise de la variable d’intérêt (position, vitesse, orientation, etc.).
+Avant tout traitement, nous avons procédé à la synchronisation temporelle des différentes acquisitions issues des capteurs (gyroscope, accéléromètre, magnétomètre, etc.). Cela permet de garantir que les mesures analysées correspondent aux mêmes instants physiques, ce qui est essentiel pour toute fusion ou comparaison de données multisources. La synchronisation a été réalisée en alignant les horodatages fournis par chaque capteur.
 
-Le principe du filtre de Kalman repose sur deux étapes principales :
-\begin{itemize}
-    \item \textbf{Prédiction} : à partir du modèle dynamique du système, le filtre prédit l’état futur et son incertitude.
-    \item \textbf{Mise à jour (correction)} : lorsque de nouvelles mesures sont disponibles, le filtre corrige son estimation en fonction de l’erreur observée entre la prédiction et la mesure réelle.
-\end{itemize}
+\subsection{Détection des valeurs aberrantes}
 
-Mathématiquement, le filtre de Kalman repose sur l'hypothèse que les erreurs de mesure et les incertitudes sont de nature gaussienne (bruit blanc) et que le système peut être modélisé de manière linéaire. Pour des systèmes non linéaires, des variantes comme le filtre de Kalman étendu (EKF) ou le filtre de Kalman non linéaire (UKF) sont utilisées.
+Une fois les données synchronisées, nous avons utilisé des représentations graphiques de type \textbf{boxplot} (ou boîtes à moustaches) pour visualiser la distribution des données de chaque capteur. Ces graphiques permettent d’identifier facilement les éventuelles valeurs aberrantes, c’est-à-dire les points très éloignés de la médiane ou dépassant l’intervalle interquartile étendu (défini en cours par $[Q1 - 1{,}5 \times IQR,\ Q3 + 1{,}5 \times IQR]$).
 
-\subsection{Application dans notre cas}
+Ces valeurs peuvent provenir de bruits ponctuels, de pertes de signal ou d'erreurs transitoires dans la transmission. Elles ont été exclues des jeux de données à l'aide d’un filtre conditionnel simple basé sur ces bornes statistiques.
 
-Dans notre projet, le filtre de Kalman a été utilisé pour fusionner les données de l'accéléromètre et du gyroscope. L’accéléromètre fournit une estimation de l’orientation à long terme mais bruitée, tandis que le gyroscope offre des mesures plus stables à court terme mais sujettes à la dérive. Le filtre de Kalman permet de combiner ces deux sources d'information pour obtenir une estimation de l’orientation à la fois stable et précise.
+\subsection{Lissage et filtrage complémentaire}
 
-Cette fusion permet de limiter les effets des bruits haute fréquence de l’accéléromètre et de compenser la dérive du gyroscope, ce qui est essentiel pour une utilisation fiable des capteurs dans un système embarqué.
+En complément, un filtrage numérique a pu être appliqué sur certaines séries temporelles à fort bruit, notamment via un filtre passe-bas de type moyenne glissante (moving average) ou un filtre de Savitzky-Golay, selon le type de signal et le niveau de bruit observé. Cela permet de réduire les fluctuations rapides non représentatives sans altérer les tendances générales du mouvement.
 
+\subsection{Résultat du prétraitement}
 
+Après filtrage, les signaux présentent une meilleure continuité et une diminution significative du bruit. Les valeurs extrêmes ont été supprimées, rendant les signaux plus exploitables pour les étapes suivantes telles que la calibration dynamique ou la fusion multi-capteurs.
 
