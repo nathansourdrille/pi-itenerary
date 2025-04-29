@@ -1,10 +1,36 @@
 \section{Calibration effectuée}
 
 \subsection{Démarche}
-La calibration vise à réduire les erreurs systématiques. Pour l’accéléromètre et le gyroscope, nous avons mesuré les valeurs à l’arrêt pour corriger les biais. 
+La calibration vise à réduire les erreurs systématiques. Pour l’accéléromètre et le gyroscope, nous avons mesuré les valeurs à l’arrêt afin de corriger les biais.
+
+\begin{itemize}
+    \item \textbf{GPS} : Nous avons paramétré le GPS de telle sorte que \texttt{MODE\_GNSS = GPS\_BEIDOU\_GLONASS}. Cela permet de bénéficier d'une couverture satellite plus dense et plus stable, réduisant ainsi les pertes de signal et améliorant la précision de la position, notamment en milieu urbain ou boisé. Cette configuration maximise le nombre de satellites visibles en continu. Par exemple, lors de nos acquisitions, notre GPS détectait une trentaine de satellites dans de bonnes conditions.
+
+    \item \textbf{Accéléromètre} : Deux paramètres doivent être ajustés : la plage de mesure et la fréquence d’échantillonnage. La plage de mesure permet d’adapter la sensibilité du capteur aux accélérations attendues (±2g, ±4g, etc.). Une plage trop grande réduit la précision sur de petites accélérations, tandis qu’une plage trop petite peut entraîner une saturation. La fréquence d’échantillonnage permet de suivre des variations rapides du mouvement : une fréquence trop basse peut lisser ou perdre des événements rapides.
+
+    \item \textbf{Gyroscope} : Très réactif pour détecter les rotations, mais sujet à la dérive sans recalibrage. Nous avons ajusté deux paramètres : la plage de mesure (en °/s) pour adapter le capteur aux vitesses angulaires attendues, et la fréquence d’échantillonnage pour capturer les variations rapides de rotation.
+
+    \item \textbf{Magnétomètre} : Utile pour connaître l’orientation absolue, mais sensible aux perturbations magnétiques ambiantes. Deux paramètres ont été considérés : la fréquence d’échantillonnage et la plage de mesure. Un calibrage manuel a également été effectué par des mouvements circulaires (en forme de 8) pour linéariser la réponse.
+
+    \item \textbf{LIDAR} : Même si nous ne l’avons pas utilisé dans ce projet, nous avons observé en travaux pratiques que certains paramètres influencent ses performances, notamment les angles de balayage : \texttt{MIN\_ANGLE} et \texttt{MAX\_ANGLE}, qui permettent de concentrer la mesure sur une zone d’intérêt.
+\end{itemize}
 
 \subsection{Expérimentations}
-Nous avons relevé les valeurs brutes dans différentes orientations et positions. Les écarts ont permis d’ajuster les offsets et les gains.
+Nous avons relevé les valeurs brutes en réalisant à chaque fois le même parcours en extérieur. Des tests répétés ont été effectués pour valider la stabilité des coefficients de correction.
+
+\begin{itemize}
+    \item \textbf{GPS} : Grâce au mode multi-constellation (\texttt{GPS\_BEIDOU\_GLONASS}), nous avons constaté une excellente stabilité du signal, avec un nombre constant de satellites visibles. Les trajectoires étaient plus lisses et moins sujettes aux discontinuités.
+
+    \item \textbf{Accéléromètre} : Nous avons réalisé 20 acquisitions en modifiant progressivement les couples plage de mesure / fréquence d’échantillonnage. Ne disposant pas de référence externe précise (comme un téléphone ou un système optique), nous avons comparé les données entre elles pour détecter les combinaisons les plus stables.  
+    \textit{Pour cela, un test statistique comme l’analyse de la variance (ANOVA) ou le test de Kruskal-Wallis (si les données ne sont pas normales) peut être utilisé pour comparer la dispersion des mesures en fonction des couples de paramètres. Cela permet d’identifier le réglage offrant la meilleure cohérence.}
+
+    \item \textbf{Gyroscope} : Les biais ont été mesurés à l’arrêt pour chaque axe (X, Y, Z), puis soustraits dynamiquement durant les acquisitions. Cela a permis de réduire la dérive constatée au fil du temps.
+
+    \item \textbf{Magnétomètre} : Le calibrage manuel a été effectué par des mouvements de type "8" dans l’espace pour estimer et corriger les biais internes dus aux perturbations magnétiques. Les résultats montrent une amélioration notable de la cohérence des mesures d’orientation.
+
+    \item \textbf{LIDAR} : Lors des TPs, nous avons observé que restreindre l’angle de balayage permet de concentrer l’analyse sur une zone précise (par exemple un seul côté du capteur), ce qui peut réduire les données inutiles et améliorer la réactivité du traitement.
+\end{itemize}
 
 \subsection{Résultats}
-Les données corrigées présentent une réduction notable du biais et une meilleure cohérence des mesures, notamment lors des déplacements rectilignes ou rotations contrôlées.
+Les données corrigées présentent une réduction notable du biais et une meilleure cohérence entre les capteurs. Lors des déplacements rectilignes ou des rotations contrôlées, les trajectoires obtenues sont plus fluides et précises. L’utilisation de constellations multiples pour le GPS s’est révélée particulièrement efficace, et le recalibrage des capteurs inertiels a permis de limiter les dérives et d’obtenir une estimation de mouvement plus fiable.
+
