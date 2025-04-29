@@ -1,6 +1,21 @@
 \section{Calibration effectuée}
 
 \subsection{Démarche}
+
+La calibration vise à réduire les erreurs systématiques. Cette section concerne uniquement le gyroscope. En effet, ce capteur présente une dérive dans le temps, même en l’absence de mouvement. Cela est principalement dû à un biais constant propre à chaque axe de mesure. Il est donc nécessaire d’estimer ce biais afin de le soustraire dynamiquement aux données lors de l’utilisation.
+
+\subsection{Expérimentations}
+
+Pour ce faire, nous avons réalisé une acquisition en maintenant le système complètement à l’arrêt. En théorie, les vitesses angulaires mesurées devraient être nulles. Cependant, on observe que les valeurs dérivent légèrement dans le temps, indiquant la présence d’un biais. 
+
+Nous avons enregistré les mesures sur une durée de plusieurs dizaines de secondes, puis calculé la moyenne des valeurs mesurées pour chaque axe (X, Y, Z). Ces moyennes ont ensuite été utilisées comme biais statique à corriger.
+
+Un graphique de l’évolution des mesures brutes au cours du temps met clairement en évidence cette dérive, notamment sur l’axe Z (à insérer si disponible).
+
+(mettre grapheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)
+
+
+\subsection{Démarche}
 La calibration vise à réduire les erreurs systématiques. Pour l’accéléromètre et le gyroscope, nous avons mesuré les valeurs à l’arrêt afin de corriger les biais.
 
 \begin{itemize}
