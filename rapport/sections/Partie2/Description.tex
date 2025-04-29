@@ -4,16 +4,42 @@ Cette partie a pour but de présenter les capteurs que nous avons utilisés lors
 \section{Description et fonctionnement}
 
 \subsection{GPS}
-Le capteur GPS (Global Positioning System) permet d'obtenir la position géographique d’un objet en temps réel à l’aide de signaux satellites. Il fournit typiquement des données de latitude, longitude, altitude, vitesse et temps. Ce capteur est essentiel pour le suivi de trajectoire.
+Le capteur GPS (Global Positioning System) est un composant permettant de capter les signaux envoyés par les satellites GPS afin de déterminer une position géographique précise. Pour rappel, le GPS est le nom du système GNSS (Global Navigation Satellite System) développé par les États-Unis. Il s'agit d’un système de positionnement basé sur des satellites artificiels placés en orbite et fonctionnant de manière coordonnée.
+\vspace{0.5cm}\\
+Ce réseau repose sur une constellation d’environ 30 satellites opérationnels, situés à une altitude d’environ 20 200 km. La précision pour les usages civils varie généralement entre 3 et 5 mètres. Plus le nombre de satellites captés est élevé, plus la précision augmente, notamment grâce à la correction des erreurs liées à l’atmosphère ou aux interférences.
+\vspace{0.5cm}\\
+Le principe de fonctionnement est plutôt simple: chaque satellite émet en continu un signal contenant l'heure exacte d’émission et sa position dans l’espace, transmis à la vitesse de la lumière. À la réception, le capteur GPS calcule sa distance à chaque satellite en mesurant le temps de parcours du signal.
+\vspace{0.5cm}\\
+Pour fonctionner correctement, le capteur doit capter les signaux d’au moins quatre satellites : les signaux de trois d’entre eux permettent de déterminer une position en deux dimensions via la trilatération, tandis que le quatrième sert à corriger l’erreur d’horloge du récepteur et à déterminer l’altitude.
+
+Il fournit typiquement des données de latitude, longitude, altitude, vitesse et temps. Ce capteur est essentiel pour le suivi de trajectoire.
 
 \subsection{Accéléromètre}
-L'accéléromètre mesure les accélérations linéaires suivant les trois axes X, Y et Z. Il permet de détecter les mouvements, les chocs, et d’estimer l’orientation d’un objet (par exemple, inclinaison) lorsqu’il est combiné avec d’autres capteurs.
+Un accéléromètre est un dispositif qui mesure l'accélération (ou le mouvement) auquel il est soumis en appliquant le principe fondamentale de la dynamique: \\
+\begin{adjustwidth}{7.5cm}{0cm} $\vec{F} = m \vec{a}$.
+\end{adjustwidth}
+\vspace{0.2cm}\\
+En termes simples, l'accélèromètre détecte les changements de vitesse ou de direction. L'accéléromètre fonctionne en mesurant la force exercée sur un petit composant interne, souvent une masse suspendue à un ressort ou un capteur piézoélectrique. Cette masse se déplace en fonction des variations d'accélération de l'objet. Plus l'objet accélère, plus cette masse se déplace. Ce mouvement est ensuite mesuré par le capteur.
+\vspace{0.5cm}\\
+L'accéléromètre mesure les accélérations linéaires le long des trois axes (X, Y et Z). Il permet ainsi de détecter les mouvements, les chocs, et d’estimer l’orientation d’un objet (comme l'inclinaison). Lorsqu'il est combiné avec d’autres capteurs, il peut aussi fournir des informations plus précises sur la position et le mouvement de l'objet dans l'espace.
 
 \subsection{Gyroscope}
-Le gyroscope mesure la vitesse angulaire de rotation autour des trois axes. Il est souvent utilisé pour suivre l’orientation d’un objet en mouvement, en particulier dans les systèmes d’asservissement ou de navigation inertielle.
+Le gyroscope est un capteur qui mesure la vitesse angulaire, c’est-à-dire la rapidité avec laquelle un objet tourne autour de ses axes (X, Y ou Z). Contrairement à l’accéléromètre qui détecte des mouvements linéaires, le gyroscope mesure les rotations. Le principe de fonctionnement du gyroscope repose sur la conservation du moment cinétique. Lorsqu’un rotor (ou masse tournante) est mis en rotation, il tend à conserver son orientation dans l’espace, conformément à la loi :\\
+\begin{adjustwidth}{6cm}{0cm}$\dfrac{d\vec{L}_O}{dt} = 0 \Rightarrow \vec{L}_O = \vec{\text{Cte}}$
+\end{adjustwidth}
+\vspace{0.1cm}\\
+avec $\vec{L}_O$ le moment cinétique par rapport à un point O.
+\vspace{0.5cm}\\
+Dans les gyroscopes MEMS (Micro-Electro-Mechanical Systems) modernes, cette rotation est généralement mesurée par effet Coriolis. Une petite structure oscillante à l’intérieur du capteur subit une déviation lorsqu’elle est en mouvement de rotation. Cette déviation est proportionnelle à la vitesse angulaire et peut être détectée électriquement.
+\vspace{0.5cm}\\
+Grâce à ces mesures, le gyroscope est capable de suivre les changements d’orientation d’un appareil, ce qui le rend essentiel pour notre processus de développement.
 
 \subsection{Magnétomètre}
-Le magnétomètre détecte le champ magnétique terrestre et fonctionne comme une boussole numérique. Il permet de déterminer l’orientation absolue par rapport au nord magnétique. Il est souvent combiné au gyroscope pour améliorer la précision de l’orientation.
+Le magnétomètre est un capteur qui mesure l’intensité et la direction d’un champ magnétique, généralement celui de la Terre. Il fonctionne comme une boussole numérique, permettant de déterminer l’orientation absolue d’un objet par rapport au nord magnétique. Contrairement au gyroscope, qui mesure des vitesses de rotation relatives, le magnétomètre fournit un repère fixe dans l’espace.
+\vspace{0.5cm}\\
+Le principe de fonctionnement le plus courant repose sur l’effet Hall. Lorsqu’un courant électrique traverse un conducteur ou un semi-conducteur soumis à un champ magnétique perpendiculaire, une différence de potentiel apparaît sur les côtés du matériau. Cette tension, appelée tension de Hall, est proportionnelle à l’intensité du champ magnétique traversant le capteur. Elle est mesurée électroniquement pour en déduire la composante du champ magnétique selon chaque axe (X, Y, Z).
+\vspace{0.5cm}\\
+Le magnétomètre permet donc d’obtenir une mesure vectorielle du champ magnétique terrestre, et ainsi de calculer l’orientation d’un objet par rapport aux points cardinaux. Toutefois, il est sensible aux perturbations électromagnétiques de l’environnement (matériaux ferromagnétiques, courants, appareils électroniques, etc.). Pour cette raison, il est souvent combiné avec un gyroscope et un accéléromètre, permettant une estimation plus fiable et précise de l’orientation dans l’espace.
 
 \section{Avantages et inconvénients}
 Chaque capteur présente des avantages et des limites :
