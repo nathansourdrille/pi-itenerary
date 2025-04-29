@@ -54,7 +54,7 @@ if __name__ == "__main__":
     imu_save_path = None
 
     if args.base_filename:
-        timestamp = time.strftime("%Y%m%d_%H%M%S")
+        timestamp = time.strftime("%Y%m%d")
         filename = f"{args.base_filename}_{timestamp}" if args.base_filename else timestamp
 
         gnss_save_path = os.path.join(GNSS_SAVE_DIR, f"{filename}_gnss.csv")

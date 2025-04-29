@@ -22,11 +22,13 @@
 \input{sections/colophon}
 \input{sections/titlepage}
 
+% À partir d'ici, le style courant sera appliqué à toutes les pages
+\pagestyle{courant}
+
 % Table des matières
 \tableofcontents
-%Hiérarchie
+% Hiérarchie
 \setcounter{page}{1}
-\thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
 \input{sections/Introduction}
 \input{sections/Presentation_des_capteurs}
 \input{sections/Presentation_systeme_acquisition}
@@ -35,9 +37,7 @@
 
 \section{Citations et références}
 
-
 \begin{thebibliography}{9}
-    \thispagestyle{courant}
     \bibitem{einstein1905}
     Albert Einstein.
     \textit{Zur Elektrodynamik bewegter Körper}.
@@ -65,11 +65,8 @@
 
 % Annexes
 \appendix
-\thispagestyle{courant} % Appliquer le style d'en-tête spécifique à cette page
-
-Contenu de l'annexe A .
+Contenu de l'annexe A.
 % Liste des figures
 \listoffigures
-\thispagestyle{courant}
 
 \end{document}
