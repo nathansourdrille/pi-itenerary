@@ -4,12 +4,12 @@ from config import GPS_BEIDOU_GLONASS,GPS_GLONASS,BEIDOU_GLONASS,GPS_BEIDOU,GLON
 MODE_GNSS = GPS_BEIDOU_GLONASS
 
 # Paramètres de l'IMU
-ACCEL_RANGE= 4                  # Plage de mesure de l'accéléromètre (g)
-ACCEL_FREQ= 208                   # Fréquence d'échantillonnage de l'accéléromètre (Hz)
-GYRO_RANGE= 500                   # Plage de mesure du gyroscope (dps)
-GYRO_FREQ= 208                 # Fréquence d'échantillonnage du gyroscope (Hz)
-MAGNETO_RANGE= 8              # Plage de mesure du magnétomètre (gauss)
-MAGNETO_FREQ= 20              # Fréquence d'échantillonnage du magnétomètre (Hz)
+ACCEL_RANGE= 16                  # Plage de mesure de l'accéléromètre (g)
+ACCEL_FREQ= 3330                   # Fréquence d'échantillonnage de l'accéléromètre (Hz)
+GYRO_RANGE= 2000                   # Plage de mesure du gyroscope (dps)
+GYRO_FREQ= 3330               # Fréquence d'échantillonnage du gyroscope (Hz)
+MAGNETO_RANGE= 16              # Plage de mesure du magnétomètre (gauss)
+MAGNETO_FREQ= 560              # Fréquence d'échantillonnage du magnétomètre (Hz)
 
 # Paramètres du LiDAR
 MIN_ANGLE=0                    # Angle minimal du scan en degrés
