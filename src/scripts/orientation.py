@@ -5,7 +5,6 @@ from sensors.GNSS import GNSS
 from sensors.IMU import read_IMU, initialize_sensors
 from utils import LCD
 from core.gnss_distance import compute_distance, format_distance
-import math
 
 def compute_relative_direction(target_bearing, imu_heading):
     """

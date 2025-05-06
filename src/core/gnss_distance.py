@@ -2,6 +2,7 @@ from config import GNSS_DEVICE_ADDR, LCD_DEVICE_ADDR, GPS_BEIDOU_GLONASS
 from sensors.GNSS import GNSS
 from utils import LCD
 import time
+import math
 
 def compute_distance(pt1,pt2):
     """
