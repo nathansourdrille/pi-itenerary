@@ -42,12 +42,38 @@ Le principe de fonctionnement le plus courant repose sur l’effet Hall. Lorsqu�
 Le magnétomètre permet donc d’obtenir une mesure vectorielle du champ magnétique terrestre, et ainsi de calculer l’orientation d’un objet par rapport aux points cardinaux. Toutefois, il est sensible aux perturbations électromagnétiques de l’environnement (matériaux ferromagnétiques, courants, appareils électroniques, etc.). Pour cette raison, il est souvent combiné avec un gyroscope et un accéléromètre, permettant une estimation plus fiable et précise de l’orientation dans l’espace.
 
 \section{Avantages et inconvénients}
-Chaque capteur présente des avantages et des limites :
+Chaque capteur mesure une grandeur physique, mais aucun capteur n'est parfait : 
+\hspace{0.5cm} Chacun présente des atouts et des limitations qu'il convient de connaitre afin de concevoir un système de mesure fiable.
 \begin{itemize}
-    \item \textbf{GPS} : Bonne précision sur la position à grande échelle, mais latence élevée et faible fréquence d’échantillonnage. Inefficace en intérieur.
-    \item \textbf{Accéléromètre} : Précis pour les mouvements rapides, mais sensible au bruit et aux erreurs d’intégration.
-    \item \textbf{Gyroscope} : Très réactif pour détecter les rotations, mais dérive dans le temps sans recalibrage.
-    \item \textbf{Magnétomètre} : Utile pour connaître l’orientation absolue, mais perturbé par les champs magnétiques ambiants.
+    \item \textbf{GPS} : \begin{itemize}
+        \item \textit{Avantages} : \n Le GPS a une bonne précision géographique (de l'ordre de quelques mètres pour un GPS civil).\n De plus, il fonctionne de manière autonome. En effet, il n'a pas
+        besoin d'infrastructure locale. En outre, il permet de déterminer la position absolue sur le globe (latitude, longitude, altitude).
+        \item \textit{Limites} : \n Même si le GPS nous offre plusieurs avantages. Ce dernier a quelques limites à ne pas ignorer. En fait, il a une latence élevée de l'ordre de plusieurs centaines de millisecondes à quelques secondes.\n
+        Le GPS a aussi une faible fréquence d'échantillonnage (entre 1Hz et 10Hz), ce qui n'est parfois pas suffisant surtout pour capter les dynamiques rapides. Il ne faut pas oublier aussi qu'il est peu fiable
+        en environnements clos comme les bâtiments, tunnels, etc... car il nécessite une ligne de vue avec les satellites. Finalement, le GPS est vulnérable aux interférences radio et au brouillage.
+    \end{itemize}
+    \item \textbf{Accéléromètre} \begin{itemize}
+        \item \textit{Avantages} : \n L'accélèromètre nous offre une mesure directe de l'accélération linéaire dans les 3 axes (x,y,z). En effet, ce dernier est très utile pour détecter les chocs, les mouvements  ou les vibrations.
+        Sa haute fréquence d'échantillonnage (plusieurs KHz) lui permet d'avoir un suivi précis des changements rapides. Les avantages les plus importants de l'accélèromètre sont sa taille et son coût. En effet, il est peu coûteux et très compact.
+
+        \item \textit{Limites} : \n Tout comme le GPS, l'accélèromètre a ses inconvénients.En fait, un accélèromètre est très sensible au bruit (bruit thermique, vibrations parasites).
+        Les mesures nécessitent souvent un filtrage notamment : un filtre passe-bas ou filtre de Kalman. De plus, un accélèromètre ne donne pas la position absolue. Il donne seulement des informations relatives au mouvement.
+
+    \end{itemize}
+    \item \textbf{Gyroscope} : 
+    \begin{itemize}
+        \item \textit{Avantages} : \n Le gyroscope permet de mesurer la vitesse angulaire, c’est-à-dire les rotations autour des axes. \n Il est très réactif et précis à court terme, ce qui le rend particulièrement utile pour détecter des changements rapides d’orientation. \n Grâce à sa haute fréquence d’échantillonnage, il est capable de suivre les mouvements avec une grande précision en temps réel.
+        
+        \item \textit{Limites} : \n Cependant, le gyroscope présente aussi certaines limites. \n Il souffre notamment d’un phénomène appelé dérive : les petites erreurs de mesure s’accumulent avec le temps, ce qui dégrade la précision à long terme si le capteur n’est pas recalibré. \n De plus, il consomme généralement plus d’énergie que d’autres capteurs comme l’accéléromètre, ce qui peut poser problème dans les systèmes autonomes. 
+    \end{itemize}
+    
+    \item \textbf{Magnétomètre} : 
+    \begin{itemize}
+        \item \textit{Avantages} : \n Le magnétomètre mesure le champ magnétique terrestre, ce qui permet d’estimer l’orientation absolue par rapport au nord magnétique. \n Contrairement au gyroscope, il ne dérive pas avec le temps. \n Il est donc particulièrement utile pour corriger les erreurs d’orientation dans les systèmes de navigation. 
+        
+        \item \textit{Limites} : \n Le principal inconvénient du magnétomètre est sa grande sensibilité aux perturbations magnétiques locales. \n En présence de métaux ferromagnétiques ou de champs électromagnétiques générés par des appareils électroniques, ses mesures peuvent devenir très imprécises. \n Il nécessite souvent un étalonnage régulier pour fonctionner correctement, notamment en environnement intérieur ou urbain dense.
+    \end{itemize}
+
 \end{itemize}
 
 \section{Sources de bruitages et/ou défauts techniques}
