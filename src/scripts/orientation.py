@@ -86,7 +86,7 @@ def orientation_game(checkpoint_file):
                     time.sleep(1)
                     continue
 
-                current_pos = (gnss.latitude.coords_DD, gnss.longitude.coords_DD)
+                current_pos = (gnss.latitude.coordinates_DD, gnss.longitude.coordinates_DD)
                 distance = compute_distance(current_pos, target)
 
                 imu_heading = get_imu_heading()
