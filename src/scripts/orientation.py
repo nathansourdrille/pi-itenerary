@@ -1,10 +1,10 @@
 import csv
 import time
-from config import GNSS_DEVICE_ADDR, LCD_DEVICE_ADDR, GPS_BEIDOU_GLONASS, LSM6DSO_ADDR, LIS3MDL_ADDR
+from config.constants import GNSS_DEVICE_ADDR, LCD_DEVICE_ADDR, GPS_BEIDOU_GLONASS, LSM6DSO_ADDR, LIS3MDL_ADDR
 from sensors.GNSS import GNSS
 from sensors.IMU import read_IMU, initialize_sensors
 from utils import LCD
-from gnss_distance import compute_distance, format_distance
+from core.gnss_distance import compute_distance, format_distance
 
 def compute_relative_direction(target_bearing, imu_heading):
     """
