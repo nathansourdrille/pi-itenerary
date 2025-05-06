@@ -8,6 +8,33 @@ from core.gnss_distance import compute_distance, format_distance
 from config import LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, ACCEL_FREQ, GYRO_RANGE, GYRO_FREQ, MAGNETO_RANGE, MAGNETO_FREQ
 import math
 
+def compute_bearing(start_point, end_point):
+    """
+    Calcule l'angle de direction (bearing) entre deux points GPS en degrés (0-360).
+    L'angle est calculé par rapport au nord géographique.
+
+    Args:
+        start_point: Tuple (latitude, longitude) du point de départ en degrés décimaux
+        end_point: Tuple (latitude, longitude) du point d'arrivée en degrés décimaux
+
+    Returns:
+        float: Angle en degrés par rapport au nord (0-360)
+    """
+    lat1 = math.radians(start_point[0])
+    lon1 = math.radians(start_point[1])
+    lat2 = math.radians(end_point[0])
+    lon2 = math.radians(end_point[1])
+
+    dlon = lon2 - lon1
+
+    y = math.sin(dlon) * math.cos(lat2)
+    x = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(dlon)
+
+    bearing = math.degrees(math.atan2(y, x))
+    bearing = (bearing + 360) % 360  # Normalisation à 0-360
+
+    return bearing
+
 def compute_relative_direction(target_bearing, imu_heading):
     """
     Calcule la direction relative à suivre en fonction de l'orientation du joueur.
