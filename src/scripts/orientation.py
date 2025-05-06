@@ -36,7 +36,7 @@ def get_imu_heading():
     Lit les données du magnétomètre pour déterminer l'orientation du joueur.
     Retourne l'angle en degrés (0-360) par rapport au nord magnétique.
     """
-    _, _, _, _, _, _, mag_x, mag_y, _ = read_IMU(LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, GYRO_RANGE, GYRO_FREQ)
+    _, _, _, _, _, _, mag_x, mag_y, _ = read_IMU(LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, GYRO_RANGE, MAGNETO_RANGE)
 
     heading = math.degrees(math.atan2(mag_y, mag_x))
     heading = (heading + 360) % 360
