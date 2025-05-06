@@ -29,3 +29,8 @@
 
 # Pistes pour aller plus loin
 - Détection de l'intérieur en fonction de la différence entre les données du téléphone et du GPS
+
+---
+
+# Fonctionnalité en plus
+- Tracer carte en 3D (heatmap)
