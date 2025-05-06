@@ -6,6 +6,7 @@ from sensors.IMU import read_IMU, initialize_sensors
 from utils import LCD
 from core.gnss_distance import compute_distance, format_distance
 from config import LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, ACCEL_FREQ, GYRO_RANGE, GYRO_FREQ, MAGNETO_RANGE, MAGNETO_FREQ
+import math
 
 def compute_relative_direction(target_bearing, imu_heading):
     """
