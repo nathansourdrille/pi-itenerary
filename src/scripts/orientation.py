@@ -5,6 +5,7 @@ from sensors.GNSS import GNSS
 from sensors.IMU import read_IMU, initialize_sensors
 from utils import LCD
 from core.gnss_distance import compute_distance, format_distance
+from config import LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, ACCEL_FREQ, GYRO_RANGE, GYRO_FREQ, MAGNETO_RANGE, MAGNETO_FREQ
 
 def compute_relative_direction(target_bearing, imu_heading):
     """
@@ -35,7 +36,7 @@ def get_imu_heading():
     Lit les données du magnétomètre pour déterminer l'orientation du joueur.
     Retourne l'angle en degrés (0-360) par rapport au nord magnétique.
     """
-    _, _, _, _, _, _, mag_x, mag_y, _ = read_IMU(LSM6DSO_ADDR, LIS3MDL_ADDR, 4, 1000, 2000, 104, 4)
+    _, _, _, _, _, _, mag_x, mag_y, _ = read_IMU(LSM6DSO_ADDR, LIS3MDL_ADDR, ACCEL_RANGE, GYRO_RANGE, GYRO_FREQ)
 
     heading = math.degrees(math.atan2(mag_y, mag_x))
     heading = (heading + 360) % 360
