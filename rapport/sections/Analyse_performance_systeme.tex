@@ -1,6 +1,8 @@
 \chapter{Analyse des performances du système d'acquisition}
 \section{Méthodologie pour la détermination du paramétrage du système d'acquisition}
 \section{Description et analyse du choix des méthodes statistiques avec les résultats obtenus}
+
+
 \section{Analyse des résultats de tracking obtenus}
 
 \subsection{Mouvement extérieur 1}
@@ -8,13 +10,13 @@
 \subsubsection{Comparaison des trajets}
 \begin{figure}[H]
     \centering
+    \label{fig: Comparaison trajet mouvement exterieur 1}
     \includegraphics[height=400pt, width = 500pt]{../traitements/mouvement_exterieur1/comparaison_trajets}
     \caption{Comparaison trajet mouvement extérieur 1 (Gps vs Téléphone)}
-    \label{fig: Comparaison trajet mouvement exterieur 1}
 \end{figure}
 
 Dans cette exemple, on a fait deux tours à l'extérieur et on remarque qu'en prenant les données du téléphone comme repère. Le GPS qu'on utilise n'est pas
-trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
+trop mauvais. En effet, quand on fait la moyenne des deux trajectoires on retrouve une trajectoire qui ressemble au chemin pris lors de l'acquisition.
 
 \subsubsection{Comparaison latitude  et longitude}
 \begin{figure}[h]
@@ -32,6 +34,9 @@ trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
     \end{minipage}
 \end{figure}
 
+On remarque que les mesures de latitude et de longitude effectuées à l'aide de notre GPS correspondent pluttôt bien aux mesures réalisées au téléphone sur l'application GPS Logger.\\
+On constate cependant qu'en général les mesures prises par l'application mobile présentent des valeurs maximales ( respectivement minimales ) légèrement supérieures ( respectivement inférieures ).
+
 \subsubsection{Boite à moustache vitesse / accéleration}
 
 \begin{figure}[H]
@@ -39,7 +44,9 @@ trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
     \includegraphics[height=250pt, width = \linewidth]{../traitements/mouvement_exterieur1/boxplots_vitesse_acceleration}
     \caption{Boite à moustache }
     \label{fig: Boxplot mouvement_exterieur1}
-\end{figure}
+\end{figure}\\
+On observe une vitesse de marche moyenne de 1 mètre par seconde qui correspond à une vitesse moyenne de 4 kilomètre par heure environ sachant que la seconde boite à moustache présente une moyenne d'accéleration nulle ce qui signifie que l'ensemble des acquisitions ont été effectuées dans les mêmes conditions exactement.
+
 
 
 \subsubsection{Evolution de l'erreur mouvement exterieur1}
@@ -50,6 +57,9 @@ trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
     \caption{ Evolution de l'erreur en cours du temps }
     \label{fig: erreur_evolution  mouvement_exterieur1}
 \end{figure}
+Ce graphe illustre l’évolution de l’erreur de position entre les mesures GPS et la position estimée par le téléphone durant un mouvement extérieur. On observe que l’erreur initiale est relativement élevée, atteignant environ 20 mètres, avant de diminuer de manière significative. Par la suite, l’erreur varie de façon irrégulière mais reste généralement comprise entre 2 et 15 mètres. Ces fluctuations peuvent être dues à plusieurs facteurs, tels que des interférences satellites, des obstacles environnementaux (bâtiments, arbres), ou encore des limitations du capteur du téléphone.
+
+Globalement, on remarque une tendance à la stabilisation partielle de l’erreur après les premières observations, ce qui pourrait indiquer un temps d’adaptation ou de calibration du système GPS du téléphone. Ainsi, il faut attendre quelques secondes pour stabiliser avant de commencer nos prochaines acquisitions.
 
 
 \subsubsection{Valeurs aberrantes}
@@ -60,9 +70,13 @@ trop mauvais (FIXEZ çA JE DIS DE LA MERDE).
     \caption{ Valeurs aberrantes}
     \label{fig: Valeurs aberrantes mouvement_exterieur1}
 \end{figure}
+La figure~\ref{fig: Valeurs aberrantes mouvement_exterieur1} présente deux graphiques illustrant la détection de \textbf{valeurs aberrantes} dans les séries temporelles de \textbf{vitesse} (graphique intitulé \og Vitesse avec valeurs aberrantes \fg) et d'\textbf{accélération} (graphique intitulé \og Accélération avec valeurs aberrantes \fg) mesurées lors de notre acquisition.
 
+Le graphique \og Vitesse avec valeurs aberrantes \fg montre l’évolution de la vitesse au cours du temps. La courbe bleue représente les vitesses considérées comme normales, tandis que les points rouges indiquent les \textit{valeurs aberrantes} détectées. Ces dernières apparaissent de manière sporadique, souvent aux extrémités de la plage des données. Cela peut refléter des erreurs de capteurs ou des bruits de mesure. La majorité des valeurs se concentrent autour de 1~m/s, ce qui est cohérent avec une vitesse de marche humaine (cf Figure \ref{fig: Boxplot mouvement_exterieur1}).
 
+Le graphique \og Accélération avec valeurs aberrantes \fg montre quant à lui l’évolution de l’accélération. La courbe verte indique les valeurs normales, tandis que les points rouges représentent les accélérations considérées comme aberrantes. On y observe une plus grande densité d'anomalies, ce qui est attendu puisque l’accélération, étant une dérivée seconde, est plus sensible au bruit. Les valeurs normales d’accélération sont généralement proches de zéro, tandis que les pics extrêmes sont identifiés comme des anomalies.
 
+Ainsi, cette figure met en évidence l’importance de la détection de valeurs aberrantes pour améliorer la qualité et la fiabilité des mesures avant tout traitement ou analyse avancée.
 
 
 
@@ -132,11 +146,11 @@ si on était immobile.
     \label{fig: Comparaison trajet immobile exterieur 2}
 \end{figure}
 
-Ici, on peut remarquer que les données fournies par le téléphone sont beaucoup plus précises que les données fournies. En effet, on ne peut pas se fier
+Ici, on peut remarquer que les données fournies par le téléphone sont beaucoup plus précises que les données fournies par le GPS. En effet, on ne peut pas se fier
 aux données du GPS. (à conclure après je sais pas voir avec la démarche etc)
 
 
-subsubsection{Comparaison latitude  et longitude}
+\subsubsection{Comparaison latitude  et longitude}
 \begin{figure}[h]
     \centering
     \begin{minipage}{0.45\textwidth}
