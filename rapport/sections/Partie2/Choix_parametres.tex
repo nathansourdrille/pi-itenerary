@@ -1,69 +1,31 @@
+% Choix des paramètres d'acquisition
+\newpage
 \section{Choix des paramètres d'acquisition}
 
-Comme indiqué ci-dessus, nous disposons de quatre capteurs :
+Nous avons adopté une démarche statistique pour le choix des paramètres d'acquisition. Vingt séries de mesures ont été réalisées en faisant varier au maximum les réglages des différents capteurs. Néanmoins, l'absence de référence externe (le smartphone) pour comparer nos résultats a posé la question suivante : comment choisir un bon paramétrage sans pouvoir évaluer précisément les erreurs systématiques ?
+
+\subsection{Test d'homogénéité des variances}
+
+Dans un premier temps, nous avons évalué l’impact des modifications de paramètres sur la dispersion des mesures à l’aide du test de Levene (https://datatab.fr/tutorial/levene-test). Ce test permet de vérifier l’hypothèse nulle selon laquelle plusieurs échantillons proviennent d’une population à variance identique. De plus, il accepte des échantillons de tailles différentes.
 
 \begin{itemize}
-\item Un GPS (le module GNSS)
-\item Un gyroscope et un accéléromètre (LSM6DSO)
-\item Un magnétomètre (LIS3MDL)
-\item Un LiDAR (RPLIDAR A1M8)
+  \item $H_0$~: les groupes ont des variances égales.
+  \item $H_1$~: les groupes ont des variances différentes.
 \end{itemize}
-\vspace{0.5cm}\\
 
-Tous les capteurs utilisés lors des TPs nécessitent une configuration adéquate de leurs paramètres, à l'exception du module GNSS. \\Avant d'expliquer le choix de nos paramètres, commençons par les présenter.
+Si la p-valeur obtenue est supérieure à 0,05, on ne peut pas rejeter $H_0$ : les variances sont jugées homogènes. Si elle est inférieure à 0,05, on conclut à une différence significative des variances.
 
-\subsection{ Présentation des paramètres }
-
-\subsubsection{Accéléromètre}
-
-Pour l'accéléromètre, deux paramètres importants sont à considérer :
-
+Les hypothèses du test de Levene sont :
 \begin{itemize}
-\item Les plages de mesure disponibles, c'est-à-dire la vitesse à laquelle les mesures sont mises à jour sont : ±2G, ±4G, ±8G, ±16G
-\item Les fréquences d'acquisition possibles sont : 12.5 Hz, 26 Hz, 52 Hz, 104 Hz, 208 Hz, 416 Hz, 833 Hz, 1660 Hz, 3330 Hz, 6660 Hz
-\end{itemize}
-\subsubsection{Gyroscope}
-
-Pour le gyroscope, les paramètres sont similaires, mais avec des valeurs différentes :
-
-\begin{itemize}
-\item Les plages de mesure disponibles sont : 125 dps, 250 dps, 500 dps, 1000 dps, 2000 dps
-\item Les fréquences d'acquisition possibles sont : 12.5 Hz, 26 Hz, 52 Hz, 104 Hz, 208 Hz, 416 Hz, 833 Hz, 1660 Hz, 3330 Hz, 6660 Hz
+  \item observations indépendantes,
+  \item variable mesurée à un niveau d'échelle métrique.
 \end{itemize}
 
-\subsection{Démarche}
-La calibration vise à réduire les erreurs systématiques. Pour l’accéléromètre et le gyroscope, nous avons mesuré les valeurs à l’arrêt afin de corriger les biais.
+Nous avons implémenté ce test en Python, puis comparé nos résultats à ceux fournis par la fonction \texttt{levene} de la bibliothèque \texttt{SciPy} (cf. annexe).
 
-\begin{itemize}
-    \item \textbf{GPS} : Nous avons paramétré le GPS de telle sorte que \texttt{MODE\_GNSS = GPS\_BEIDOU\_GLONASS}. Cela permet de bénéficier d'une couverture satellite plus dense et plus stable, réduisant ainsi les pertes de signal et améliorant la précision de la position, notamment en milieu urbain ou boisé. \\Cette configuration maximise le nombre de satellites visibles en continu. Par exemple, lors de nos acquisitions, notre GPS détectait une trentaine de satellites dans de bonnes conditions.
+\subsection{Sélection empirique du meilleur paramétrage}
 
-    \item \textbf{Accéléromètre} : Deux paramètres doivent être ajustés : la plage de mesure et la fréquence d’échantillonnage. La plage de mesure permet d’adapter la sensibilité du capteur aux accélérations attendues (±2g, ±4g, etc.).\\ Une plage trop grande réduit la précision sur de petites accélérations, tandis qu’une plage trop petite peut entraîner une saturation. \\La fréquence d’échantillonnage permet de suivre des variations rapides du mouvement : une fréquence trop basse peut lisser ou perdre des événements rapides.
-    \vspace{0.5cm}\\Cependant, il est important de noter que l'utilisation d'une fréquence et d'une plage de mesure élevées entraîne une consommation d'énergie et des besoins en calcul plus importants. Par conséquent, pour les applications ne nécessitant pas une réactivité élevée ou ne mesurant pas de grandes valeurs, il est recommandé d'opter pour des paramètres plus modestes. \\Cela permet de préserver les ressources énergétiques et de calcul, contribuant ainsi à une utilisation plus écologique et efficace des capteurs.
+Une fois l’impact des réglages mis en évidence, nous avons adopté une approche empirique : parmi les vingt acquisitions, nous avons sélectionné celle présentant l’écart-type le plus faible pour chaque capteur, indiquant la meilleure stabilité des mesures.
 
-    \item \textbf{Magnétomètre} : Utile pour connaître l’orientation absolue, mais sensible aux perturbations magnétiques ambiantes. Deux paramètres ont été considérés : la fréquence d’échantillonnage et la plage de mesure. Un calibrage manuel a également été effectué par des mouvements circulaires (en forme de 8) pour linéariser la réponse.
+Cette méthode, bien que simple, permet de retenir un paramétrage optimisé en termes de précision, tout en restant compatible avec les contraintes énergétiques et informatiques évoquées précédemment.
 
-    \item \textbf{LIDAR} : Même si nous ne l’avons pas utilisé dans ce projet, nous avons observé en travaux pratiques que certains paramètres influencent ses performances, notamment les angles de balayage : \texttt{MIN\_ANGLE} et \texttt{MAX\_ANGLE}, qui permettent de concentrer la mesure sur une zone d’intérêt.
-\end{itemize}
-
-\subsection{Expérimentations}
-Nous avons relevé les valeurs brutes en réalisant à chaque fois le même parcours en extérieur. Des tests répétés ont été effectués pour valider la stabilité des coefficients de correction.
-
-\begin{itemize}
-    \item \textbf{GPS} : Grâce au mode multi-constellation (\texttt{GPS\_BEIDOU\_GLONASS}), nous avons constaté une excellente stabilité du signal, avec un nombre constant de satellites visibles. Les trajectoires étaient plus lisses et moins sujettes aux discontinuités.
-
-    \item \textbf{Accéléromètre} : Nous avons réalisé 20 acquisitions en modifiant progressivement les couples plage de mesure / fréquence d’échantillonnage. Ne disposant pas de référence externe précise (comme un téléphone ou un système optique), nous avons comparé les données entre elles pour détecter les combinaisons les plus stables.  
-    \textit{Pour cela, un test statistique comme l’analyse de la variance (ANOVA) ou le test de Kruskal-Wallis (si les données ne sont pas normales) peut être utilisé pour comparer la dispersion des mesures en fonction des couples de paramètres. Cela permet d’identifier le réglage offrant la meilleure cohérence.}
-
-    \item \textbf{Magnétomètre} : Le calibrage manuel a été effectué par des mouvements de type "8" dans l’espace pour estimer et corriger les biais internes dus aux perturbations magnétiques. Les résultats montrent une amélioration notable de la cohérence des mesures d’orientation.
-
-    \item \textbf{LIDAR} : Lors des TPs, nous avons observé que restreindre l’angle de balayage permet de concentrer l’analyse sur une zone précise (par exemple un seul côté du capteur), ce qui peut réduire les données inutiles et améliorer la réactivité du traitement.
-\end{itemize}
-
-%\textbf{Conditions et situations nécessitant une modification des paramètres :}
-%\vspace{0.5cm}\\
-%Dans certaines situations, il est crucial pour l'accéléromètre de fonctionner à une fréquence de mesure élevée.\\
-%Une fréquence de mesure élevée permet au système de réagir rapidement, ce qui est particulièrement utile pour les applications nécessitant une réactivité accrue, telles que les systèmes de déclenchement d'airbag ou les drones.
-%
-%En ce qui concerne la plage de mesure (range), certains systèmes doivent détecter des valeurs élevées, que ce soit pour l'accéléromètre ou le gyroscope.\\ Dans ces cas, il est essentiel de configurer une plage de mesure étendue pour capturer ces valeurs extrêmes.\vspace{0.5cm}\\
-%
-%Cependant, il est important de noter que l'utilisation d'une fréquence et d'une plage de mesure élevées entraîne une consommation d'énergie et des besoins en calcul plus importants. Par conséquent, pour les applications ne nécessitant pas une réactivité élevée ou ne mesurant pas de grandes valeurs, il est recommandé d'opter pour des paramètres plus modestes. Cela permet de préserver les ressources énergétiques et de calcul, contribuant ainsi à une utilisation plus écologique et efficace des capteurs.

@@ -1,6 +1,6 @@
 Acquisition en extérieur
-Date : 
-Temps : 
+Date : 06/05, 17h18
+Temps : éclaircies
 Paramètres IMU : 
 	accel_range = 16
 	accel_freq = 1660
