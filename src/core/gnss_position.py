@@ -46,7 +46,7 @@ def get_position(mode=GPS_BEIDOU_GLONASS,
       if gnss.reception_ok:
         if not(no_LCD):
           # A COMPLETER
-          lcd_display.afficher(...)
+          llcd_display.afficher(f"Lat: {latitude}\nLon: {longitude}")
       else:
         if not(no_LCD):
           lcd_display.afficher("Recherche de    signal GNSS...")
