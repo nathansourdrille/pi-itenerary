@@ -1,46 +1,52 @@
-\begin{align}
-    \omega_{x,k+1} &= \omega_{x,k} + \dot{\omega}_{x,k} \, \Delta t \\
-    \omega_{y,k+1} &= \omega_{y,k} + \dot{\omega}_{y,k} \, \Delta t \\
-    \omega_{z,k+1} &= \omega_{z,k} + \dot{\omega}_{z,k} \, \Delta t
-\end{align}
+\documentclass[12pt,a4paper]{article}
 
-Conditions initiales :
-\begin{equation}
-\omega_{x,0}, \quad \omega_{y,0}, \quad \omega_{z,0} \quad \text{calculés à } t = 0
-\end{equation}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
 
-Ces valeurs sont obtenues grâce au magnétomètre.
+\geometry{margin=2.5cm}
 
+\title{Modélisation et Estimation par Filtre de Kalman}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
 \section*{Données disponibles}
 Dans le cadre de ce projet, les données accessibles sont les suivantes :
 \begin{itemize}
     \item \textbf{Position GPS :}
     \begin{itemize}
-        \item $\boldsymbol{\theta}$ : longitude (coordonnée est-ouest)
-        \item $\boldsymbol{\lambda}$ : latitude (coordonnée nord-sud)
+        \item $\theta$ : longitude (coordonnée est-ouest)
+        \item $\lambda$ : latitude (coordonnée nord-sud)
     \end{itemize}
 
     \item \textbf{Données de l'IMU (Inertial Measurement Unit) :}
     \begin{itemize}
         \item \textbf{Accéléromètre :} Mesures d'accélération linéaire
         \begin{itemize}
-            \item $\mathbf{a}_x$ : accélération selon l'axe $x$
-            \item $\mathbf{a}_y$ : accélération selon l'axe $y$
-            \item $\mathbf{a}_z$ : accélération selon l'axe $z$
+            \item $a_x$ : accélération selon l'axe $x$
+            \item $a_y$ : accélération selon l'axe $y$
+            \item $a_z$ : accélération selon l'axe $z$
         \end{itemize}
 
         \item \textbf{Gyroscope :} Mesures de vitesse angulaire
         \begin{itemize}
-            \item $\boldsymbol{\dot{\omega}}_x$ : vitesse angulaire autour de l'axe $x$ (roulis)
-            \item $\boldsymbol{\dot{\omega}}_y$ : vitesse angulaire autour de l'axe $y$ (tangage)
-            \item $\boldsymbol{\dot{\omega}}_z$ : vitesse angulaire autour de l'axe $z$ (lacet)
+            \item $\dot{\omega}_x$ : vitesse angulaire autour de l'axe $x$ (roulis)
+            \item $\dot{\omega}_y$ : vitesse angulaire autour de l'axe $y$ (tangage)
+            \item $\dot{\omega}_z$ : vitesse angulaire autour de l'axe $z$ (lacet)
         \end{itemize}
 
         \item \textbf{Magnétomètre :} Mesures du champ magnétique terrestre
         \begin{itemize}
-            \item $\mathbf{m}_x$ : composante selon l'axe $x$
-            \item $\mathbf{m}_y$ : composante selon l'axe $y$
-            \item $\mathbf{m}_z$ : composante selon l'axe $z$
+            \item $m_x$ : composante selon l'axe $x$
+            \item $m_y$ : composante selon l'axe $y$
+            \item $m_z$ : composante selon l'axe $z$
         \end{itemize}
     \end{itemize}
 \end{itemize}
@@ -48,27 +54,158 @@ Dans le cadre de ce projet, les données accessibles sont les suivantes :
 \subsection*{Remarques}
 \begin{itemize}
     \item Les données GPS ($\theta$, $\lambda$) donnent la position absolue, mais avec une précision limitée (erreur de quelques mètres).
-    \item Les données de l'IMU fournissent des mesures inertielles précises à court terme, mais sujettes à une dérive temporelle (erreur qui s'accumule), de plus l'accélération s'exprime dans le repère de l'IMU lui-même et pas dans un repère terrestre.
+    \item Les données de l'IMU fournissent des mesures inertielles précises à court terme, mais sujettes à une dérive temporelle (erreur qui s'accumule). De plus, l'accélération s'exprime dans le repère de l'IMU lui-même et non dans un repère terrestre.
     \item Le magnétomètre permet de s'orienter par rapport au nord magnétique, mais peut être perturbé par des interférences locales.
 \end{itemize}
 
 \section*{Premier modèle basique}
-En raison de la nature instable de certains de nos composants nous serions tentés de créer des modèles de filtre de Kalman compliqués afin de pouvoir corriger les différentes erreurs qui s'accumulent. Mais pour débuter nous souhaitons faire un modèle simple, linéaire qui ne nécessite pas l'utilisation d'un filtre de Kalman étendu.
+En raison de la nature instable de certains de nos composants, nous serions tentés de créer des modèles de filtre de Kalman compliqués afin de pouvoir corriger les différentes erreurs qui s'accumulent. Mais pour débuter, nous souhaitons faire un modèle simple, linéaire, qui ne nécessite pas l'utilisation d'un filtre de Kalman étendu.
 
 \subsection*{Rappel filtre de Kalman}
-En statistique et en théorie du contrôle, le filtre de Kalman est un filtre à réponse impulsionnelle infinie qui estime les états d'un système dynamique à partir d'une série de mesures incomplètes ou bruitées \cite{wikip_kalman}.
+En statistique et en théorie du contrôle, le filtre de Kalman est un estimateur récursif à réponse impulsionnelle infinie permettant d'estimer les états d'un système dynamique à partir de mesures bruitées ou incomplètes \cite{wikip_kalman}.
 
 Le filtre de Kalman en contexte discret est un estimateur récursif : l'état courant est estimé à partir de l'estimation de l'état précédent et des mesures actuelles. Le filtre de Kalman suppose que le processus discret réel $\mathbf{x}_{k}$ (où $k$ dénote l'indice de temps), suit la loi d'évolution linéaire suivante :
 \[
-x_{k} = F_{k}x_{k-1} + G_{k}u_{k} + w_{k}
+\mathbf{x}_{k} = \mathbf{F}_{k}\mathbf{x}_{k-1} + \mathbf{G}_{k}\mathbf{u}_{k} + \mathbf{w}_{k}
 \]
-
-On a :
+où :
 \begin{itemize}
-    \item $\mathbf{F}_k$ : la matrice de transition entre l'état $k-1$ et l'état $k$
-    \item $\mathbf{u}_k$ : la commande d'entrée
-    \item $\mathbf{G}_k$ : la matrice de contrôle reliant $\mathbf{u}_k$ et $\mathbf{x}_k$
-    \item $\mathbf{w}_{k}$ : est le bruit d'évolution, gaussien centré et de matrice de covariance $\mathbf{Q}_{k}$.
+    \item $\mathbf{F}_k$ : matrice de transition entre l'état $k-1$ et l'état $k$
+    \item $\mathbf{u}_k$ : commande d'entrée
+    \item $\mathbf{G}_k$ : matrice de contrôle reliant $\mathbf{u}_k$ et $\mathbf{x}_k$
+    \item $\mathbf{w}_{k}$ : bruit d'évolution, gaussien centré de covariance $\mathbf{Q}_{k}$
 \end{itemize}
 
-À partir de cet état on obtient $\mathbf{y}_k$ notre vecteur d'observation à l'instant $k$.
+L'observation $\mathbf{z}_k$ à l'instant $k$ est donnée par :
+\[
+\mathbf{z}_k = \mathbf{H}_k\mathbf{x}_k + \mathbf{v}_k
+\]
+avec :
+\begin{itemize}
+    \item $\mathbf{H}_k$ : matrice d'observation à l'instant $k$
+    \item $\mathbf{v}_k$ : bruit de mesure
+\end{itemize}
+
+\subsection*{Prétraitement des données}
+Maintenant que nous savons quels éléments nous devons définir ainsi que les données que nous avons à notre disposition, nous pouvons modéliser le système.
+Cependant, un problème apparaît : nos acquisitions sont en coordonnées sphériques. Cela complique les traitements, qui risquent de ne pas être linéaires. Il est donc préférable de les transformer en coordonnées cartésiennes pour pouvoir appliquer un modèle linéaire, notamment pour l'intégration dans un filtre de Kalman classique.
+
+Pour convertir les coordonnées sphériques en coordonnées cartésiennes, on utilise :
+\begin{align*}
+x &= R_t \cos(\lambda) \cos(\theta) \\
+y &= R_t \cos(\lambda) \sin(\theta) \\
+z &= R_t \sin(\lambda)
+\end{align*}
+avec :
+\begin{itemize}
+    \item $R_t$ : rayon terrestre
+    \item $\lambda$ : latitude en radians
+    \item $\theta$ : longitude en radians
+\end{itemize}
+
+Comme dit plus haut, les accélérations sont exprimées dans le repère local de l'accéléromètre. Pour que notre filtre fonctionne correctement, il faut les exprimer dans le repère terrestre. On applique donc une matrice de rotation à nos vecteurs d'accélération.
+
+Les angles d'orientation sont obtenus par intégration des vitesses angulaires :
+\begin{align}
+    \omega_{x,k+1} &= \omega_{x,k} + \dot{\omega}_{x,k} \, \Delta t \\
+    \omega_{y,k+1} &= \omega_{y,k} + \dot{\omega}_{y,k} \, \Delta t \\
+    \omega_{z,k+1} &= \omega_{z,k} + \dot{\omega}_{z,k} \, \Delta t
+\end{align}
+
+Conditions initiales :
+\[
+\omega_{x,0}, \quad \omega_{y,0}, \quad \omega_{z,0} \quad \text{calculés à } t = 0 \text{ avec les données du magnétomètre}
+\]
+
+On en déduit la matrice de rotation $R_k$ à appliquer à nos vecteurs d'accélération à l'instant $k$ :
+\[
+R_k = R_{\omega_{x,k}} R_{\omega_{y,k}} R_{\omega_{z,k}}
+\]
+
+Ainsi, on obtient l'accélération dans le repère terrestre :
+\[
+\tilde{\mathbf{a}} =
+\begin{pmatrix}
+    \tilde{a}_x \\
+    \tilde{a}_y \\
+    \tilde{a}_z
+\end{pmatrix}
+=
+R_k
+\begin{pmatrix}
+    a_x \\
+    a_y \\
+    a_z
+\end{pmatrix}
+\]
+
+\subsection*{Modélisation du problème}
+Toutes nos données sont désormais transformées pour être utilisables.
+
+On définit le vecteur d'état $\mathbf{x}_k$ :
+\[
+\mathbf{x}_k =
+\begin{pmatrix}
+    x \\
+    y \\
+    z \\
+    v_x \\
+    v_y \\
+    v_z
+\end{pmatrix}
+\]
+
+À partir des équations classiques du mouvement, on a :
+\[
+\begin{cases}
+x_{k+1} = x_k + v_{x,k} \, dt + \frac{1}{2} \tilde{a}_{x,k} \, dt^2 \\
+y_{k+1} = y_k + v_{y,k} \, dt + \frac{1}{2} \tilde{a}_{y,k} \, dt^2 \\
+z_{k+1} = z_k + v_{z,k} \, dt + \frac{1}{2} \tilde{a}_{z,k} \, dt^2 \\
+v_{x,k+1} = v_{x,k} + \tilde{a}_{x,k} \, dt \\
+v_{y,k+1} = v_{y,k} + \tilde{a}_{y,k} \, dt \\
+v_{z,k+1} = v_{z,k} + \tilde{a}_{z,k} \, dt
+\end{cases}
+\]
+
+Ce système est mis sous forme matricielle :
+\[
+\mathbf{x}_{k+1} = \mathbf{F}_k \mathbf{x}_k + \mathbf{G}_k \mathbf{u}_k + \mathbf{w}_k
+\]
+avec :
+\[
+\mathbf{F}_k =
+\begin{pmatrix}
+    1 & 0 & 0 & dt & 0 & 0 \\
+    0 & 1 & 0 & 0 & dt & 0 \\
+    0 & 0 & 1 & 0 & 0 & dt \\
+    0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}
+\quad \text{et} \quad
+\mathbf{G}_k =
+\begin{pmatrix}
+    \frac{1}{2} dt^2 & 0 & 0 \\
+    0 & \frac{1}{2} dt^2 & 0 \\
+    0 & 0 & \frac{1}{2} dt^2 \\
+    dt & 0 & 0 \\
+    0 & dt & 0 \\
+    0 & 0 & dt
+\end{pmatrix}
+\]
+et $\mathbf{u}_k = \tilde{\mathbf{a}}_k$
+\\
+Enfin, comme on souhaite observer uniquement la position, la matrice d'observation $\mathbf{H}_k$ est :
+\[
+\mathbf{H}_k =
+\begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0
+\end{pmatrix}
+\]
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
