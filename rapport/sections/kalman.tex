@@ -205,6 +205,55 @@ Enfin, comme on souhaite observer uniquement la position, la matrice d'observati
 \end{pmatrix}
 \]
 
+\section*{Analyse des résultats}
+
+Après implémentation et exécution du filtre de Kalman sur les données disponibles, nous pouvons analyser les résultats obtenus afin d’évaluer la performance et la pertinence de notre modèle basique.
+
+\subsection*{Validation de l’estimation de la position}
+
+Le filtre de Kalman permet d’obtenir une estimation optimisée de la position en combinant la mesure GPS, précise à long terme mais bruitée, avec les mesures inertielle issues de l’IMU, précises à court terme mais sujettes à dérive.
+
+\begin{itemize}
+    \item \textbf{Précision spatiale :}
+    La comparaison des positions estimées avec les mesures GPS brutes montre généralement une réduction du bruit aléatoire, traduisant un meilleur lissage des trajectoires.
+    \item \textbf{Réactivité :}
+    Grâce à l’intégration des accélérations corrigées, le filtre peut suivre les variations rapides de mouvement même en l’absence temporaire de signaux GPS (ex. dans des tunnels ou zones d’interférences).
+    \item \textbf{Erreur d’estimation :}
+    L’erreur quadratique moyenne (RMSE) entre la position estimée et les données GPS de référence peut être calculée pour quantifier l’amélioration obtenue par rapport aux mesures brutes.
+\end{itemize}
+
+\subsection*{Limites du modèle basique}
+
+Malgré ces améliorations, certaines limitations inhérentes au modèle simplifié apparaissent :
+
+\begin{itemize}
+    \item \textbf{Approximation linéaire :}
+    Le modèle linéaire ne prend pas en compte les non-linéarités dues à la dynamique réelle du véhicule ou des capteurs, ce qui peut dégrader les performances en cas de mouvements complexes.
+    \item \textbf{Modélisation des bruits :}
+    Les matrices de covariance $\mathbf{Q}_k$ (processus) et $\mathbf{R}_k$ (mesure) doivent être choisies avec soin. Un mauvais calibrage peut engendrer une mauvaise estimation, oscillante ou trop lente à réagir.
+    \item \textbf{Dérive gyroscopique et erreurs d’orientation :}
+    L’intégration des vitesses angulaires pour calculer la matrice de rotation $R_k$ accumule les erreurs au fil du temps, impactant la qualité de la transformation des accélérations et donc l’estimation des vitesses et positions.
+    \item \textbf{Perturbations du magnétomètre :}
+    Les interférences magnétiques locales peuvent fausser l’orientation initiale et rendre instable la transformation vers le repère terrestre.
+\end{itemize}
+
+\subsection*{Perspectives d’amélioration}
+
+Pour pallier ces limites, plusieurs axes d’amélioration peuvent être envisagés :
+
+\begin{itemize}
+    \item Utilisation d’un \textbf{filtre de Kalman étendu (EKF)} ou \textbf{filtre de Kalman unscented (UKF)} afin de mieux gérer les non-linéarités dans la dynamique et l’observation.
+    \item Intégration d’un modèle plus complet de la dynamique du système, par exemple en incluant les angles d’orientation comme variables d’état, pour mieux estimer la matrice de rotation.
+    \item Calibration plus fine des matrices de bruit et étude des modèles statistiques des erreurs spécifiques aux capteurs.
+    \item Fusion avec d’autres capteurs, comme un baromètre pour la hauteur, ou des systèmes de correction GPS différentiel pour réduire les erreurs absolues.
+\end{itemize}
+
+\subsection*{Conclusion}
+
+Ce premier modèle linéaire simple de filtre de Kalman permet d’établir une base robuste pour la fusion des données GPS et IMU. Il montre une amélioration sensible de la qualité d’estimation de la position par rapport aux mesures brutes. Cependant, les limites relevées invitent à développer un modèle plus complet et adapté aux spécificités des capteurs et de la dynamique étudiée pour une application finale plus précise et fiable.
+
+
+
 \bibliographystyle{plain}
 \bibliography{refs}
 

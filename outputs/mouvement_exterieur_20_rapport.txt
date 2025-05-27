@@ -1,0 +1,31 @@
+L'angle par rapport à l'axe x est de 160.48°
+L'angle par rapport à l'axe y est de 85.68°
+L'angle par rapport à l'axe z est de 109.00°
+=== Analyse des erreurs et amélioration par filtrage ===
+
+Axe X :
+  ➤ RMSE avant filtrage   : 9.402 m
+  ➤ RMSE après filtrage   : 11.171 m  -> ❌ Pas amélioré
+  ➤ Erreur moyenne (kf)   : -6.046 m
+  ➤ Écart-type erreur (kf): 9.394 m
+  ➤ Corrélation ref vs x_kf : 0.916
+
+Axe Y :
+  ➤ RMSE avant filtrage   : 4.194 m
+  ➤ RMSE après filtrage   : 4.485 m  -> ❌ Pas amélioré
+  ➤ Erreur moyenne (kf)   : -0.199 m
+  ➤ Écart-type erreur (kf): 4.480 m
+  ➤ Corrélation ref vs y_kf : 0.987
+
+Axe Z :
+  ➤ RMSE avant filtrage   : 8.065 m
+  ➤ RMSE après filtrage   : 7.570 m  -> ✅ Amélioré
+  ➤ Erreur moyenne (kf)   : 4.345 m
+  ➤ Écart-type erreur (kf): 6.200 m
+  ➤ Corrélation ref vs z_kf : 0.947
+
+=== Conclusion globale ===
+❌ Le filtrage n'améliore pas suffisamment la précision (moins de 2 axes améliorés).
+
+Données enrichies sauvegardées dans outputs/mouvement_exterieur_20_resultats.csv
+Graphique des erreurs sauvegardé dans outputs/mouvement_exterieur_20_erreurs.png
