@@ -1,22 +1,3 @@
-\documentclass[12pt,a4paper]{article}
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[french]{babel}
-\usepackage{amsmath, amssymb}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{hyperref}
-
-\geometry{margin=2.5cm}
-
-\title{Modélisation et Estimation par Filtre de Kalman}
-\author{}
-\date{}
-
-\begin{document}
-
-\maketitle
 \section*{Données disponibles}
 Dans le cadre de ce projet, les données accessibles sont les suivantes :
 \begin{itemize}
@@ -209,18 +190,79 @@ Enfin, comme on souhaite observer uniquement la position, la matrice d'observati
 
 Après implémentation et exécution du filtre de Kalman sur les données disponibles, nous pouvons analyser les résultats obtenus afin d’évaluer la performance et la pertinence de notre modèle basique.
 
-\subsection*{Validation de l’estimation de la position}
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=400pt, width = 500pt]{../outputs/mouvement_exterieur_20_erreurs}
+    \caption{Comparaison erreur trajet filtré / non filtré (acquision 20)}
+    \label{fig: Comparaison erreur trajet filtré / non filtré (acquision 20)}
+\end{figure}
 
-Le filtre de Kalman permet d’obtenir une estimation optimisée de la position en combinant la mesure GPS, précise à long terme mais bruitée, avec les mesures inertielle issues de l’IMU, précises à court terme mais sujettes à dérive.
+\textbf{Analyse des erreurs et amélioration par filtrage (acquisition 20)}
 
-\begin{itemize}
-    \item \textbf{Précision spatiale :}
-    La comparaison des positions estimées avec les mesures GPS brutes montre généralement une réduction du bruit aléatoire, traduisant un meilleur lissage des trajectoires.
-    \item \textbf{Réactivité :}
-    Grâce à l’intégration des accélérations corrigées, le filtre peut suivre les variations rapides de mouvement même en l’absence temporaire de signaux GPS (ex. dans des tunnels ou zones d’interférences).
-    \item \textbf{Erreur d’estimation :}
-    L’erreur quadratique moyenne (RMSE) entre la position estimée et les données GPS de référence peut être calculée pour quantifier l’amélioration obtenue par rapport aux mesures brutes.
-\end{itemize}
+\begin{tcolorbox}[title=Analyse des erreurs – Axe X]
+  ➤ RMSE avant filtrage   : 9.402 m\\
+  ➤ RMSE après filtrage   : 11.171 m $\Rightarrow$ ❌ Pas amélioré\\
+  ➤ Erreur moyenne (kf)   : -6.046 m\\
+  ➤ Écart-type erreur (kf): 9.394 m\\
+  ➤ Corrélation ref vs x_kf : 0.916\\
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Analyse des erreurs – Axe Y]
+  ➤ RMSE avant filtrage   : 4.194 m\\
+  ➤ RMSE après filtrage   : 4.485 m $\Rightarrow$ ❌ Pas amélioré\\
+  ➤ Erreur moyenne (kf)   : -0.199 m\\
+  ➤ Écart-type erreur (kf): 4.480 m\\
+  ➤ Corrélation ref vs y_kf : 0.987\\
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Analyse des erreurs – Axe Z]
+  ➤ RMSE avant filtrage   : 8.065 m\\
+  ➤ RMSE après filtrage   : 7.570 m $\Rightarrow$ ✅ Amélioré\\
+  ➤ Erreur moyenne (kf)   : 4.345 m\\
+  ➤ Écart-type erreur (kf): 6.200 m\\
+  ➤ Corrélation ref vs z_kf : 0.947\\
+\end{tcolorbox}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=400pt, width = 500pt]{../outputs/mouvement_exterieur_19_erreurs}
+    \caption{Comparaison erreur trajet filtré / non filtré (acquision 19)}
+    \label{fig: Comparaison erreur trajet filtré / non filtré (acquision 19)}
+\end{figure}
+
+\textbf{Analyse des erreurs et amélioration par filtrage (acquisition 19)}
+
+\begin{tcolorbox}[title=Analyse des erreurs – Axe X]
+  ➤ RMSE avant filtrage   : 8.332 m\_
+  ➤ RMSE après filtrage   : 9.783 m $\Rightarrow$ ❌ Pas amélioré\\
+  ➤ Erreur moyenne (kf)   : -5.598 m\\
+  ➤ Écart-type erreur (kf): 8.023 m\\
+  ➤ Corrélation ref vs x_kf : 0.945\\
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Analyse des erreurs – Axe Y]
+  ➤ RMSE avant filtrage   : 8.728 m\\
+  ➤ RMSE après filtrage   : 7.788 m $\Rightarrow$ ✅ Amélioré\\
+  ➤ Erreur moyenne (kf)   : -1.159 m\\
+  ➤ Écart-type erreur (kf): 7.701 m\\
+  ➤ Corrélation ref vs y_kf : 0.964\\
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Analyse des erreurs – Axe Z]
+  ➤ RMSE avant filtrage   : 7.145 m\\
+  ➤ RMSE après filtrage   : 6.575 m $\Rightarrow$ ✅ Amélioré\\
+  ➤ Erreur moyenne (kf)   : 2.176 m\\
+  ➤ Écart-type erreur (kf): 6.204 m\\
+  ➤ Corrélation ref vs z_kf : 0.946\\
+\end{tcolorbox}
+
+\subsection*{Conclusion globale}\
+En raison d'une mauvaise méthodologie d'acquisition des données nous ne disposons que de ces 2 échantillons pour pouvoir vérifier l'efficacité du test de Kalman. Nous avons fait la quasi totalité de nos acquisitions sans mesurer en même temps un trajet de référence, ce qui rend la quasi totalité de nos acquisitions inutilisables pour des traitements relatifs au filtre de Kalman.\\
+
+On voit bien sur les résultats de nos acquisition que le filtre n'est pas parfait. Le trajet 20 n'est pas amélioré après filtrage, le trajet 19 si.\\
+
+Le filtre de Kalman linéaire implémenté n’a pas permis d'améliorer significativement la qualité de l’estimation. Cela suggère que le modèle de mouvement utilisé est trop simplifié ou que l’hypothèse de linéarité ne convient pas aux données réelles. Une extension vers un filtre de Kalman étendu (EKF) ou une meilleure prise en compte des non-linéarités (coordonnées sphériques, rotation, etc.) pourrait être nécessaire pour améliorer les performances globales.
 
 \subsection*{Limites du modèle basique}
 
@@ -228,7 +270,7 @@ Malgré ces améliorations, certaines limitations inhérentes au modèle simplif
 
 \begin{itemize}
     \item \textbf{Approximation linéaire :}
-    Le modèle linéaire ne prend pas en compte les non-linéarités dues à la dynamique réelle du véhicule ou des capteurs, ce qui peut dégrader les performances en cas de mouvements complexes.
+    Le modèle linéaire ne prend pas en compte les non-linéarités dues à la dynamique réelle du déplacement ou des capteurs, ce qui peut dégrader les performances en cas de mouvements complexes.
     \item \textbf{Modélisation des bruits :}
     Les matrices de covariance $\mathbf{Q}_k$ (processus) et $\mathbf{R}_k$ (mesure) doivent être choisies avec soin. Un mauvais calibrage peut engendrer une mauvaise estimation, oscillante ou trop lente à réagir.
     \item \textbf{Dérive gyroscopique et erreurs d’orientation :}
@@ -250,11 +292,5 @@ Pour pallier ces limites, plusieurs axes d’amélioration peuvent être envisag
 
 \subsection*{Conclusion}
 
-Ce premier modèle linéaire simple de filtre de Kalman permet d’établir une base robuste pour la fusion des données GPS et IMU. Il montre une amélioration sensible de la qualité d’estimation de la position par rapport aux mesures brutes. Cependant, les limites relevées invitent à développer un modèle plus complet et adapté aux spécificités des capteurs et de la dynamique étudiée pour une application finale plus précise et fiable.
+Ce premier modèle linéaire simple de filtre de Kalman permet d’établir une base pour la fusion des données GPS et IMU. Il montre une amélioration dans certains de la qualité d’estimation de la position par rapport aux mesures brutes. Cependant, les limites relevées invitent à développer un modèle plus complet et adapté aux spécificités des capteurs et de la dynamique étudiée pour une application finale plus précise et fiable.
 
-
-
-\bibliographystyle{plain}
-\bibliography{refs}
-
-\end{document}

@@ -9,6 +9,7 @@
 \usepackage[sc]{mathpazo} % Police Palatino
 \linespread{1.05} % Espacement des lignes
 
+\usepackage{tcolorbox}
 % Couleurs et graphiques
 \usepackage{xcolor} % Gestion des couleurs
 \definecolor{customblue}{RGB}{33,26,82} % Définition de la couleur aaublue
@@ -61,6 +62,9 @@
     linkbordercolor={1 1 1},
 	pdfstartview=FitH
 }
+
+\tcbuselibrary{listings, breakable}
+
 
 % Définition des couleurs
 \definecolor{hellgelb}{rgb}{1,1,0.8}
@@ -145,6 +149,6 @@
 % Notes à faire
 \usepackage[
   colorinlistoftodos,
-  textwidth=\marginparwidth, 
+  textwidth=\marginparwidth,
   textsize=scriptsize,
 ]{todonotes}
