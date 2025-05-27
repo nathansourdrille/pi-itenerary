@@ -1,0 +1,34 @@
+\chapter{Présentation du système d’acquisition complet}
+
+\section{Montage électrique}
+
+Le montage électrique mis en place repose sur l’intégration d’une Raspberry Pi et de capteurs connectés, associés à plusieurs équipements liés à la collecte des données. Les principaux composants connectés au système sont :
+
+\begin{itemize}
+    \item un module GPS,
+    \item un accéléromètre,
+    \item un écran LCD
+    \item Lidar
+\end{itemize}
+
+L’assemblage nécessite une attention particulière au niveau des branchements afin d’éviter toute perte de potentiel ou de court-circuit. Un schéma de câblage est également présenté ci-dessous:
+
+SHCEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+\section{Description du produit (fonctionnalités, mode d’utilisation)}
+
+L’application développée atteint pleinement l’objectif initial du projet : proposer un système permettant de suivre son trajet sur une carte de manière interactive, à la manière de Strava.\\
+Elle intègre une fonction de télémétrie pour comparer différents parcours (temps moyen, distance, vitesse, etc.) et permet un suivi précis grâce à l’intégration en temps réel d’un filtre de Kalman, combinant les données GPS et IMU pour améliorer la précision du positionnement.
+
+En complément de ces fonctionnalités, une option de course d’orientation a été ajoutée. Elle permet à l’utilisateur de suivre un itinéraire défini par des points de passage, avec un système de validation à chaque balise franchie, offrant ainsi un usage ludique et sportif du dispositif.
+
+\section{Synchronisation des capteurs}
+
+La synchronisation des capteurs a été assurée à l’aide de l’heure UTC comme référence temporelle commune. Chaque échantillon de données, qu’il provienne du GPS ou de l’IMU, est horodaté avec un \textit{timestamp} précis. Cela permet d’aligner chronologiquement les mesures issues des différents capteurs.
+
+Grâce à cette méthode, nous avons pu constituer un jeu de données unifié, combinant de manière cohérente les informations GPS et IMU pour un traitement fiable, notamment lors de l'application du filtre de Kalman.
+
+\section{Fusion de données détaillée}
+
+On a principalement utilisé le filtre de Kalman (Voir Modélisation et Estimation par Filtre de Kalman du Chapitre 4).
+

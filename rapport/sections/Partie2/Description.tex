@@ -8,10 +8,6 @@ Le capteur GPS (Global Positioning System) est un composant permettant de capter
 \vspace{0.5cm}\\
 Ce réseau repose sur une constellation d’environ 30 satellites opérationnels, situés à une altitude d’environ 20 200 km. La précision pour les usages civils varie généralement entre 3 et 5 mètres. Plus le nombre de satellites captés est élevé, plus la précision augmente, notamment grâce à la correction des erreurs liées à l’atmosphère ou aux interférences.
 \vspace{0.5cm}\\
-Le principe de fonctionnement est plutôt simple: chaque satellite émet en continu un signal contenant l'heure exacte d’émission et sa position dans l’espace, transmis à la vitesse de la lumière. À la réception, le capteur GPS calcule sa distance à chaque satellite en mesurant le temps de parcours du signal.
-\vspace{0.5cm}\\
-Pour fonctionner correctement, le capteur doit capter les signaux d’au moins quatre satellites : les signaux de trois d’entre eux permettent de déterminer une position en deux dimensions via la trilatération, tandis que le quatrième sert à corriger l’erreur d’horloge du récepteur et à déterminer l’altitude.
-
 Il fournit typiquement des données de latitude, longitude, altitude, vitesse et temps. Ce capteur est essentiel pour le suivi de trajectoire.
 
 \subsection{Accéléromètre}
@@ -21,7 +17,7 @@ Un accéléromètre est un dispositif qui mesure l'accélération (ou le mouveme
 \vspace{0.2cm}\\
 En termes simples, l'accélèromètre détecte les changements de vitesse ou de direction. L'accéléromètre fonctionne en mesurant la force exercée sur un petit composant interne, souvent une masse suspendue à un ressort ou un capteur piézoélectrique. Cette masse se déplace en fonction des variations d'accélération de l'objet. Plus l'objet accélère, plus cette masse se déplace. Ce mouvement est ensuite mesuré par le capteur.
 \vspace{0.5cm}\\
-L'accéléromètre mesure les accélérations linéaires le long des trois axes (X, Y et Z). Il permet ainsi de détecter les mouvements, les chocs, et d’estimer l’orientation d’un objet (comme l'inclinaison). Lorsqu'il est combiné avec d’autres capteurs, il peut aussi fournir des informations plus précises sur la position et le mouvement de l'objet dans l'espace.
+L'accéléromètre mesure les accélérations linéaires le long des trois axes (X, Y et Z). Il permet ainsi de détecter les mouvements, les chocs, et d’estimer l’orientation d’un objet (comme l'inclinaison).
 
 \subsection{Gyroscope}
 Le gyroscope est un capteur qui mesure la vitesse angulaire, c’est-à-dire la rapidité avec laquelle un objet tourne autour de ses axes (X, Y ou Z). Contrairement à l’accéléromètre qui détecte des mouvements linéaires, le gyroscope mesure les rotations. Le principe de fonctionnement du gyroscope repose sur la conservation du moment cinétique. Lorsqu’un rotor (ou masse tournante) est mis en rotation, il tend à conserver son orientation dans l’espace, conformément à la loi :\\
@@ -39,8 +35,9 @@ Le magnétomètre est un capteur qui mesure l’intensité et la direction d’u
 \vspace{0.5cm}\\
 Le principe de fonctionnement le plus courant repose sur l’effet Hall. Lorsqu’un courant électrique traverse un conducteur ou un semi-conducteur soumis à un champ magnétique perpendiculaire, une différence de potentiel apparaît sur les côtés du matériau. Cette tension, appelée tension de Hall, est proportionnelle à l’intensité du champ magnétique traversant le capteur. Elle est mesurée électroniquement pour en déduire la composante du champ magnétique selon chaque axe (X, Y, Z).
 \vspace{0.5cm}\\
-Le magnétomètre permet donc d’obtenir une mesure vectorielle du champ magnétique terrestre, et ainsi de calculer l’orientation d’un objet par rapport aux points cardinaux. Toutefois, il est sensible aux perturbations électromagnétiques de l’environnement (matériaux ferromagnétiques, courants, appareils électroniques, etc.). Pour cette raison, il est souvent combiné avec un gyroscope et un accéléromètre, permettant une estimation plus fiable et précise de l’orientation dans l’espace.
+Pour cette raison, il est souvent combiné avec un gyroscope et un accéléromètre, permettant une estimation plus fiable et précise de l’orientation dans l’espace.
 
+\newpage
 \section{Avantages et inconvénients}
 Chaque capteur mesure une grandeur physique, mais aucun capteur n'est parfait. \\
 Chacun présente des atouts et des limitations qu'il convient de connaitre afin de concevoir un système de mesure fiable.
@@ -76,14 +73,17 @@ Chacun présente des atouts et des limitations qu'il convient de connaitre afin 
 
 \end{itemize}
 
+\newpage
 \section{Sources de bruitages et/ou défauts techniques}
 Les capteurs sont sujets à différents types de bruits :
 \item \textbf{Sources de bruit des capteurs} :
 \begin{itemize}
-    \item \textit{GPS} : \\ Bien que le GPS soit un outil de localisation très répandu, il reste vulnérable à plusieurs types de bruits et d’erreurs. \\ L’une des principales sources de perturbation provient des conditions atmosphériques : les variations de la densité de la troposphère (couche inférieure de l’atmosphère) et les irrégularités de l’ionosphère (couche chargée en particules ionisées) peuvent ralentir ou dévier les signaux émis par les satellites, introduisant des erreurs de positionnement. \\ Par ailleurs, en milieu urbain ou montagneux, les bâtiments et obstacles naturels bloquent la ligne de vue entre les satellites et le récepteur, causant des pertes au niveau du signal ou un manque de satellites visibles, ce qui réduit la précision. \\ Le phénomène de \textit{multipath}, où les signaux rebondissent sur des surfaces avant d’atteindre le récepteur, introduit des délais artificiels dans la réception des signaux, faussant ainsi le calcul de la distance satellite-récepteur. \\ 
+    \item \textit{GPS} : \ Bien que largement utilisé, le GPS reste sensible à divers bruits et erreurs. Les conditions atmosphériques, comme les variations dans la troposphère et l’ionosphère, peuvent déformer les signaux satellites, entraînant des erreurs de position. En zone urbaine ou montagneuse, les obstacles bloquent les signaux ou limitent la visibilité des satellites, réduisant la précision. De plus, le phénomène de multipath, où les signaux rebondissent avant d’atteindre le récepteur, fausse le calcul des distances.
 
-    \item \textit{Accéléromètre et gyroscope} : \\ Les capteurs inertiels sont particulièrement sensibles aux erreurs internes liées à leur structure physique et électronique. \\ Le \textit{bruit thermique} est l’un des plus répandus : il résulte de l’agitation thermique des électrons dans les circuits du capteur, créant des fluctuations aléatoires dans les mesures. \\ Ces capteurs présentent également des \textit{biais}, c’est-à-dire une erreur constante (ou lentement variable) dans la mesure, qui peut varier en fonction de la température ou de l’usure du composant. \\ Lorsqu’on intègre les données de l’accéléromètre (pour obtenir la vitesse) ou du gyroscope (pour obtenir l’orientation), ces biais s’accumulent dans le temps et produisent une \textit{dérive} significative : même en l’absence de mouvement, le système peut croire qu’un déplacement ou une rotation est en cours. \\ À cela s’ajoutent les erreurs d’alignement des axes (erreurs de montage) et les vibrations mécaniques indésirables. \\ Ces limitations rendent l’utilisation isolée de ces capteurs peu fiable pour les estimations sur le long terme sans recalibrage ou fusion de capteurs.
+    \item \textit{Accéléromètre et gyroscope} : \
+Les capteurs inertiels souffrent d’erreurs internes dues à leur structure physique et électronique. Le \textit{bruit thermique}, causé par l’agitation des électrons, génère des fluctuations aléatoires. Les \textit{biais}, erreurs constantes influencées par la température ou l’usure, s’accumulent lors de l’intégration des mesures, entraînant une \textit{dérive} : le système détecte un mouvement inexistant. S’y ajoutent les erreurs d’alignement et les vibrations mécaniques, rendant ces capteurs peu fiables seuls sur le long terme sans recalibrage ou fusion de données.
 
-    \item \textit{Magnétomètre} : \\ Le magnétomètre mesure le vecteur du champ magnétique terrestre, ce qui en fait un capteur clé pour estimer le cap absolu (direction nord-sud). \\ Cependant, sa fiabilité est fortement dépendante de l’environnement dans lequel il est utilisé. \\ Tout d’abord, la proximité d’objets contenant des matériaux \textit{ferromagnétiques} (comme les structures métalliques, les véhicules, ou même des meubles) peut déformer localement le champ magnétique, provoquant une erreur d’orientation. \\ Ensuite, les sources \textit{électromagnétiques} actives — moteurs, transformateurs, fils conducteurs parcourus par du courant — génèrent des champs parasites susceptibles d’invalider complètement la mesure. \\ En milieu intérieur, ces perturbations sont quasiment omniprésentes. \\ Pour cette raison, il est essentiel de procéder à un \textit{étalonnage} régulier, généralement en réalisant des mouvements circulaires pour cartographier les erreurs et appliquer des corrections logicielles. \\ Malgré cela, le magnétomètre reste peu fiable dans certains environnements, et son usage seul pour l’orientation est déconseillé sans assistance d’autres capteurs.
+    \item \textit{Magnétomètre} : \
+Ce capteur mesure le champ magnétique terrestre, utile pour estimer l’orientation absolue (nord-sud). Cependant, sa fiabilité dépend fortement de l’environnement. Les objets \textit{ferromagnétiques} et les sources \textit{électromagnétiques} (moteurs, câbles, etc.) peuvent perturber la mesure. En intérieur, ces interférences sont fréquentes. Un \textit{étalonnage} régulier, par mouvements circulaires, est nécessaire pour corriger ces erreurs. Malgré cela, le magnétomètre reste peu fiable seul pour l’orientation.
 \end{itemize}
 
