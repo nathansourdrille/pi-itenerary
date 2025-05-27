@@ -1,5 +1,35 @@
 \chapter{Analyse des performances du système d'acquisition}
+
 \section{Méthodologie pour la détermination du paramétrage du système d'acquisition}
+
+Pour déterminer les meilleurs réglages de nos capteurs, nous avons réalisé plusieurs acquisitions du même trajet, en changeant les paramètres à chaque fois. Cela nous a permis de comparer les résultats et d’évaluer l’impact de chaque réglage sur la qualité des données.
+
+Les paramètres modifiés sont les suivants :
+
+\begin{itemize}
+  \item \textbf{Accéléromètre}
+  \begin{itemize}
+    \item Plages : $\pm2g$, $\pm4g$, $\pm8g$, $\pm16g$
+    \item Fréquences : 12.5 Hz, 208 Hz, 833 Hz, 1660 Hz, 3330 Hz
+  \end{itemize}
+
+  \item \textbf{Gyroscope}
+  \begin{itemize}
+    \item Plages : $\pm250$ dps, $\pm500$ dps, $\pm1000$ dps, $\pm2000$ dps
+    \item Fréquences : 12.5 Hz, 208 Hz, 833 Hz, 1660 Hz, 3330 Hz
+  \end{itemize}
+
+  \item \textbf{Magnétomètre}
+  \begin{itemize}
+    \item Plages : $\pm4$ gauss, $\pm8$ gauss, $\pm12$ gauss, $\pm16$ gauss
+    \item Fréquences : 0.625 Hz, 5 Hz, 20 Hz, 150 Hz, 560 Hz
+  \end{itemize}
+\end{itemize}
+
+Toutes les acquisitions ont été faites sur le même parcours, mais à des jours différents. Les conditions météorologiques n’étaient donc pas les mêmes à chaque fois. Il est donc important de prendre ceci en compte, car cela peut influencer les mesures en introduisant une source de bruit supplémentaire.
+
+Avant de commencer une acquisition, nous avons toujours laissé la carte d’acquisition immobile pendant quelques secondes pour que les capteurs puissent se stabiliser. Cependant, cela a été fait à proximité d’un bâtiment, ce qui n’est pas idéal, en particulier pour le magnétomètre qui peut être perturbé par les structures métalliques aux alentours. Un axe d’amélioration serait donc de débuter les acquisitions dans un environnement dégagé, loin des bâtiments, pour limiter ces perturbations.
+
 \section{Description et analyse du choix des méthodes statistiques avec les résultats obtenus}
 
 
