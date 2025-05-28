@@ -110,15 +110,8 @@ Les capteurs inertiels souffrent d’erreurs internes dues à leur structure phy
     \item \textit{Magnétomètre} : \
 Ce capteur mesure le champ magnétique terrestre, utile pour estimer l’orientation absolue (nord-sud). Cependant, sa fiabilité dépend fortement de l’environnement. Les objets \textit{ferromagnétiques} et les sources \textit{électromagnétiques} (moteurs, câbles, etc.) peuvent perturber la mesure. En intérieur, ces interférences sont fréquentes. Un \textit{étalonnage} régulier, par mouvements circulaires, est nécessaire pour corriger ces erreurs. Malgré cela, le magnétomètre reste peu fiable seul pour l’orientation.
 
-\item \textit{LiDAR} : \\
-
-Le LiDAR mesure la distance aux objets en envoyant des impulsions laser et en analysant leur temps de vol. Il fournit une représentation 3D précise de l’environnement. Cependant, plusieurs sources de bruit ou défauts techniques peuvent affecter la qualité des mesures. 
-
-Les conditions atmosphériques telles que le brouillard, la pluie ou la poussière dispersent ou absorbent partiellement le faisceau laser, réduisant la portée effective et la précision du retour. Les surfaces très réfléchissantes (comme le verre ou les miroirs) peuvent provoquer des réflexions multiples, entraînant des mesures erronées ou décalées. À l’inverse, les matériaux sombres ou absorbants (comme les tissus noirs ou certaines peintures mates) peuvent réfléchir très peu de lumière, générant des données incomplètes ou du bruit.
-
-Des erreurs peuvent aussi survenir à cause de la géométrie de la scène : des angles trop inclinés par rapport au capteur réduisent la puissance du signal réfléchi. De plus, les vibrations du support ou des erreurs de synchronisation dans les systèmes multi-capteurs peuvent introduire du flou ou des artefacts dans le nuage de points. Enfin, les LiDARs à balayage mécanique peuvent s’user ou se désaligner avec le temps, affectant leur précision.
-
-Malgré ces limitations, le LiDAR reste l’un des capteurs les plus fiables pour la perception 3D, notamment lorsqu’il est utilisé en complément d’autres capteurs.
+\item \textit{LiDAR} : \
+Bien qu'efficace pour la cartographie 3D, le LiDAR est sensible à plusieurs sources d’erreur. Les conditions atmosphériques comme le brouillard, la pluie ou la poussière peuvent affaiblir ou diffuser le faisceau laser, réduisant la portée et la précision. De plus, les surfaces très réfléchissantes, comme le verre ou les miroirs, peuvent causer des réflexions multiples, faussant les mesures. À l'inverse, les matériaux sombres ou absorbants, comme le tissu noir, renvoient peu de lumière, générant des données manquantes ou du bruit. Enfin, des erreurs peuvent se produire à cause de la géométrie de la scène ou des vibrations du capteur, nécessitant souvent une calibration ou un traitement de données pour améliorer la précision.
 
 \end{itemize}
 
