@@ -215,7 +215,7 @@ si on était immobile.
 \end{figure}
 
 Ici, on peut remarquer que les données fournies par le téléphone sont beaucoup plus précises que les données fournies par le GPS. En effet, on ne peut pas se fier
-aux données du GPS. (à conclure après je sais pas voir avec la démarche etc)
+aux données du GPS seulement. C'est l'une des raisons pour lequelles on doit appliquer un filtre de Kalman et fusionner les capteurs.
 
 
 \subsubsection{Comparaison latitude  et longitude}
@@ -262,3 +262,8 @@ aux données du GPS. (à conclure après je sais pas voir avec la démarche etc)
     \caption{ Valeurs aberrantes }
     \label{fig: Valeurs aberrantes immobile exterieur 2}
 \end{figure}
+
+\newpage
+\subsubsection{Conclusion} \\
+Les graphes ci-dessus montrent clairement que les données du GPS, prises seules, sont peu exploitables en raison du grand nombre de valeurs aberrantes, notamment lorsque le système est immobile. Cette instabilité s’explique par la faible précision instantanée du GPS grand public, soumise à de nombreux facteurs comme expliqué dans la section ~\ref{sec : sources de bruitages}. Pour améliorer la qualité des mesures, il est essentiel d’attendre un certain seuil de temps — quelques secondes — après la mise en route afin de permettre aux capteurs de se stabiliser et de se calibrer correctement.
+
