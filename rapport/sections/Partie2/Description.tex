@@ -37,6 +37,15 @@ Le principe de fonctionnement le plus courant repose sur l’effet Hall. Lorsqu�
 \vspace{0.5cm}\\
 Pour cette raison, il est souvent combiné avec un gyroscope et un accéléromètre, permettant une estimation plus fiable et précise de l’orientation dans l’espace.
 
+
+\subsection{LiDAR}
+Le LiDAR (Light Detection and Ranging) est un capteur qui mesure la distance entre un capteur et un objet en utilisant des impulsions lumineuses, généralement des lasers. Il permet de cartographier avec précision l’environnement en trois dimensions en mesurant le temps mis par la lumière pour revenir après avoir été réfléchie par un objet.
+\vspace{0.5cm}\\
+Le principe de fonctionnement repose sur la mesure du temps de vol (Time of Flight) d’un faisceau laser. Le capteur émet une impulsion lumineuse, puis détecte le retour de celle-ci après réflexion. En connaissant la vitesse de la lumière, il est possible de calculer la distance avec une grande précision. Cette méthode permet d’obtenir un nuage de points représentant la géométrie de l’environnement.
+\vspace{0.5cm}\\
+Grâce à sa capacité à fournir des mesures précises, même dans des conditions de faible luminosité, le LiDAR est largement utilisé en robotique, en cartographie et dans les véhicules autonomes pour la détection d’obstacles et la navigation.
+
+
 \newpage
 \section{Avantages et inconvénients}
 Chaque capteur mesure une grandeur physique, mais aucun capteur n'est parfait. \\
@@ -71,6 +80,20 @@ Chacun présente des atouts et des limitations qu'il convient de connaitre afin 
         \item \textit{Limites} : \\ Le principal inconvénient du magnétomètre est sa grande sensibilité aux perturbations magnétiques locales. \\ En présence de métaux ferromagnétiques ou de champs électromagnétiques générés par des appareils électroniques, ses mesures peuvent devenir très imprécises. \\ Il nécessite souvent un étalonnage régulier pour fonctionner correctement, notamment en environnement intérieur ou urbain dense.
     \end{itemize}
 
+    \item \textbf{LiDAR} :  
+\begin{itemize}
+    \item \textit{Avantages} : \\ 
+    Le LiDAR permet de mesurer avec une grande précision la distance aux objets en utilisant des impulsions lumineuses. \\ 
+    Il génère un nuage de points 3D détaillé, utile pour la cartographie, la détection d’obstacles et la modélisation de l’environnement. \\ 
+    Contrairement aux caméras, il fonctionne efficacement dans des conditions de faible luminosité ou d’obscurité totale.
+
+    \item \textit{Limites} : \\ 
+    Le LiDAR peut être sensible aux conditions atmosphériques (pluie, brouillard, poussière) qui affectent la propagation des impulsions lumineuses. \\ 
+    Il peut également être coûteux, énergivore, et sa portée est limitée par la puissance du faisceau et les propriétés réfléchissantes des surfaces. \\ 
+    Les surfaces transparentes ou très absorbantes peuvent entraîner des erreurs ou des absences de mesure.
+\end{itemize}
+
+
 \end{itemize}
 
 \newpage
@@ -85,5 +108,17 @@ Les capteurs inertiels souffrent d’erreurs internes dues à leur structure phy
 
     \item \textit{Magnétomètre} : \
 Ce capteur mesure le champ magnétique terrestre, utile pour estimer l’orientation absolue (nord-sud). Cependant, sa fiabilité dépend fortement de l’environnement. Les objets \textit{ferromagnétiques} et les sources \textit{électromagnétiques} (moteurs, câbles, etc.) peuvent perturber la mesure. En intérieur, ces interférences sont fréquentes. Un \textit{étalonnage} régulier, par mouvements circulaires, est nécessaire pour corriger ces erreurs. Malgré cela, le magnétomètre reste peu fiable seul pour l’orientation.
+
+\item \textit{LiDAR} : \\
+
+Le LiDAR mesure la distance aux objets en envoyant des impulsions laser et en analysant leur temps de vol. Il fournit une représentation 3D précise de l’environnement. Cependant, plusieurs sources de bruit ou défauts techniques peuvent affecter la qualité des mesures. 
+
+Les conditions atmosphériques telles que le brouillard, la pluie ou la poussière dispersent ou absorbent partiellement le faisceau laser, réduisant la portée effective et la précision du retour. Les surfaces très réfléchissantes (comme le verre ou les miroirs) peuvent provoquer des réflexions multiples, entraînant des mesures erronées ou décalées. À l’inverse, les matériaux sombres ou absorbants (comme les tissus noirs ou certaines peintures mates) peuvent réfléchir très peu de lumière, générant des données incomplètes ou du bruit.
+
+Des erreurs peuvent aussi survenir à cause de la géométrie de la scène : des angles trop inclinés par rapport au capteur réduisent la puissance du signal réfléchi. De plus, les vibrations du support ou des erreurs de synchronisation dans les systèmes multi-capteurs peuvent introduire du flou ou des artefacts dans le nuage de points. Enfin, les LiDARs à balayage mécanique peuvent s’user ou se désaligner avec le temps, affectant leur précision.
+
+Malgré ces limitations, le LiDAR reste l’un des capteurs les plus fiables pour la perception 3D, notamment lorsqu’il est utilisé en complément d’autres capteurs.
+
 \end{itemize}
+
 
