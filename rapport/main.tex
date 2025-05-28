@@ -1,6 +1,7 @@
 \input{setup/setup}
 \input{setup/error}
 \input{setup/macros}
+\usepackage[final]{pdfpages} 
 
 % Fix for ntheorem conflict
 \makeatletter
@@ -34,12 +35,12 @@
 \input{sections/Partie2/Calibrage}
 \input{sections/Partie2/Choix_parametres}
 \input{sections/Partie2/Filtrage_brute}
+\input{sections/Partie2_3/Presentation_du_systeme_dacquisition_complet}
 \input{sections/Analyse_performance_systeme}
 \input{sections/Partie3/kalman}
+\includepdf[pages={1-7}]{sections/Partie3/kalman.pdf}
 \input{sections/Conclusion}
-\input{sections/Annexes/annexes}
 
-\section{Citations et références}
 
 \begin{thebibliography}{9}
     \bibitem{einstein1905}
@@ -67,10 +68,6 @@
     (Consulté le 01/04/2025).
 \end{thebibliography}
 
-% Annexes
-\appendix
-Contenu de l'annexe A.
-% Liste des figures
-\listoffigures
+
 
 \end{document}

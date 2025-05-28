@@ -32,6 +32,44 @@ Avant de commencer une acquisition, nous avons toujours laissé la carte d’acq
 
 \section{Description et analyse du choix des méthodes statistiques avec les résultats obtenus}
 
+Nous avons implémenté manuellement le test de Levene afin de vérifier l’homogénéité des variances entre plusieurs acquisitions. Pour valider notre approche, nous avons comparé les résultats obtenus à ceux fournis par la fonction \texttt{levene} de la bibliothèque \texttt{scipy}. Voici les différentes étapes du processus.
+
+\vspace{0.5cm}
+
+\textbf{1. Importation des acquisitions} \\
+Nous avons commencé par importer les différentes séries de mesures à comparer :
+
+\begin{center}
+\includegraphics[width=1\linewidth]{sections/Annexes/images_annexes/code_stats_1.png}
+\end{center}
+
+\newpage
+
+\textbf{2. Implémentation manuelle du test} \\
+Nous avons ensuite codé le test de Levene étape par étape, en calculant les écarts aux médianes puis les sommes de carrés nécessaires à l’évaluation statistique :
+
+\begin{center}
+\includegraphics[width=1\linewidth]{sections/Annexes/images_annexes/code_stats_2.png}
+\end{center}
+
+\newpage
+
+\textbf{3. Validation avec \texttt{scipy}} \\
+Pour s’assurer de la validité de notre implémentation, nous avons comparé nos résultats à ceux de \texttt{scipy.stats.levene}. Une fois cette étape confirmée, nous avons utilisé les résultats pour sélectionner les meilleurs réglages :
+
+\begin{center}
+\includegraphics[width=1\linewidth]{sections/Annexes/images_annexes/code_stats_3.png}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent
+À l’issue de cette analyse, nous avons retenu les acquisitions suivantes :
+\begin{itemize}
+    \item Acquisition 13 pour l’accéléromètre,
+    \item Acquisition 6 pour le gyroscope,
+    \item Acquisition 12 pour le magnétomètre.
+\end{itemize}
 
 \section{Analyse des résultats de tracking obtenus}
 

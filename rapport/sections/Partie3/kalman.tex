@@ -1,24 +1,2 @@
+
 \section{Filtrage des signaux bruts}
-
-Pour filtrer nos données, nous avons mis en place le filtre de Kalman.
-
-\subsection{Présentation du filtre de Kalman}
-
-Le filtre de Kalman est un algorithme récursif d’estimation d’état, largement utilisé dans les systèmes de navigation, de robotique et de traitement du signal. Il permet de combiner les mesures provenant de différents capteurs tout en tenant compte de leurs incertitudes respectives, afin d’obtenir une estimation plus fiable et plus précise de la variable d’intérêt (position, vitesse, orientation, etc.).
-
-Le principe du filtre de Kalman repose sur deux étapes principales :
-\begin{itemize}
-    \item \textbf{Prédiction} : à partir du modèle dynamique du système, le filtre prédit l’état futur et son incertitude.
-    \item \textbf{Mise à jour (correction)} : lorsque de nouvelles mesures sont disponibles, le filtre corrige son estimation en fonction de l’erreur observée entre la prédiction et la mesure réelle.
-\end{itemize}
-
-Mathématiquement, le filtre de Kalman repose sur l'hypothèse que les erreurs de mesure et les incertitudes sont de nature gaussienne (bruit blanc) et que le système peut être modélisé de manière linéaire. Pour des systèmes non linéaires, des variantes comme le filtre de Kalman étendu (EKF) ou le filtre de Kalman non linéaire (UKF) sont utilisées.
-
-\subsection{Application dans notre cas}
-
-Dans notre projet, le filtre de Kalman a été utilisé pour fusionner les données de l'accéléromètre et du gyroscope. L’accéléromètre fournit une estimation de l’orientation à long terme mais bruitée, tandis que le gyroscope offre des mesures plus stables à court terme mais sujettes à la dérive. Le filtre de Kalman permet de combiner ces deux sources d'information pour obtenir une estimation de l’orientation à la fois stable et précise.
-
-Cette fusion permet de limiter les effets des bruits haute fréquence de l’accéléromètre et de compenser la dérive du gyroscope, ce qui est essentiel pour une utilisation fiable des capteurs dans un système embarqué.
-
-
-
