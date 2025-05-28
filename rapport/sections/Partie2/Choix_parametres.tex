@@ -2,3 +2,39 @@
 \newpage
 \section{Choix des paramètres d'acquisition}
 
+Le choix des paramètres d’acquisition joue un rôle crucial dans la précision et la qualité des données mesurées. Ces paramètres sont généralement configurables au niveau du micrologiciel ou via des bibliothèques logicielles. Les principaux paramètres modifiables sont les suivants :
+
+\subsection*{Fréquence d’échantillonnage (sampling rate)}
+
+La fréquence à laquelle les données sont acquises influence directement la capacité du système à capter des variations rapides :
+
+\begin{itemize}
+    \item \textbf{Fréquence élevée} (ex : 833 Hz, 1660 Hz) : permet de détecter des événements brefs et rapides, comme des vibrations ou des chocs. Elle améliore aussi la réactivité du filtre de Kalman. \\
+    \textit{Impact :} meilleure résolution temporelle mais augmentation du bruit brut et de la charge de traitement.
+    
+    \item \textbf{Fréquence faible} (ex : 12.5 Hz, 52 Hz) : réduit le bruit et la consommation d’énergie, mais risque de manquer des changements rapides. \\
+    \textit{Impact :} perte d'information sur les dynamiques rapides, mais acquisition plus stable.
+\end{itemize}
+
+\subsection*{Plage dynamique (full-scale range)}
+
+Les plages disponibles varient selon les capteurs :
+
+\begin{itemize}
+    \item \textbf{Accéléromètre} : ±2g, ±4g, ±8g, ±16g
+    \item \textbf{Gyroscope} : ±250 dps, ±500 dps, ±1000 dps, ±2000 dps
+    \item \textbf{Magnétomètre} : ±4 gauss, ±8 gauss, ±12 gauss, ±16 gauss
+\end{itemize}
+
+Le choix de la plage affecte la précision :
+
+\begin{itemize}
+    \item \textbf{Plage étroite} (ex : ±2g ou ±250 dps) : meilleure résolution des petites variations, idéale pour des mouvements lents. \\
+    \textit{Impact :} amélioration de la sensibilité, mais saturation rapide en cas de mouvement brusque.
+
+    \item \textbf{Plage large} (ex : ±16g ou ±2000 dps) : nécessaire pour capter des mouvements amples ou rapides. \\
+    \textit{Impact :} évite la saturation mais réduit la précision des mesures fines.
+\end{itemize}
+
+C’est pourquoi une phase d’expérimentation préalable a été menée (voir section 4) afin de sélectionner les réglages offrant le meilleur compromis entre précision, stabilité et contraintes matérielles.
+
