@@ -122,7 +122,7 @@ def orientation_game(checkpoint_file):
                 target_bearing = compute_bearing(current_pos, target)
                 direction_text, direction_arrow = compute_relative_direction(target_bearing, imu_heading)
 
-                lcd_line1 = f"P{current_checkpoint+1}/{total_checkpoints} {direction_arrow}"
+                lcd_line1 = f"P{current_checkpoint+1}/{total_checkpoints} {direction_text}"
                 lcd_line2 = f"{format_distance(distance)}"
                 lcd_display.afficher(f"{lcd_line1}\n{lcd_line2}")
 
