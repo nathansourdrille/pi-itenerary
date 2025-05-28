@@ -11,11 +11,18 @@ Pour ce faire, nous avons réalisé une acquisition en maintenant le système co
 
 Nous avons enregistré les mesures sur une durée de plusieurs dizaines de secondes, puis calculé la moyenne des valeurs mesurées pour chaque axe (X, Y, Z). Ces moyennes ont ensuite été utilisées comme biais statique à corriger.
 
-Un graphique de l’évolution des mesures brutes au cours du temps met clairement en évidence cette dérive, notamment sur l’axe Z (à insérer si disponible).
+Un graphique de l’évolution des mesures brutes au cours du temps met clairement en évidence cette dérive, notamment sur l’axe Z, où les valeurs mesurées restent significativement éloignées de zéro, avec un biais moyen autour de 0.6 rad/s, comme le montre la distribution des erreurs en page suivante.
+
+Sur l’axe X, les valeurs présentent une forte dispersion autour de zéro, traduisant une instabilité importante, bien que la moyenne soit relativement proche de zéro. Cela suggère un bruit élevé mais un biais faible.
+
+Sur l’axe Y, les mesures semblent plus stables, avec peu de valeurs extrêmes, et un biais très faible également.
+
+Ces moyennes, représentées par des lignes pointillées rouges dans les histogrammes de distribution d’erreur, sont utilisées comme biais statiques à corriger dans les données brutes du gyroscope pour chaque axe.
 
 \begin{figure}[H]
     \centering
-    GRAPHE A METTRE ICI
+    \includegraphics[width=1\linewidth]{sections/Annexes/images_annexes/calibrage_gyro.png}
+    \includegraphics[width=1\linewidth]{sections/Annexes/images_annexes/calibrage_gyro2.png}
     \caption{Acquisition Immobile du Gyroscope}
     \label{fig: Comparaison trajet mouvement exterieur 1}
 \end{figure}    
