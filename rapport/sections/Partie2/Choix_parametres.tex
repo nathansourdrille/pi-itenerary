@@ -2,30 +2,3 @@
 \newpage
 \section{Choix des paramètres d'acquisition}
 
-Nous avons adopté une démarche statistique pour le choix des paramètres d'acquisition. Vingt séries de mesures ont été réalisées en faisant varier au maximum les réglages des différents capteurs. Néanmoins, l'absence de référence externe (le smartphone) pour comparer nos résultats a posé la question suivante : comment choisir un bon paramétrage sans pouvoir évaluer précisément les erreurs systématiques ?
-
-\subsection{Test d'homogénéité des variances}
-
-Dans un premier temps, nous avons évalué l’impact des modifications de paramètres sur la dispersion des mesures à l’aide du test de Levene (https://datatab.fr/tutorial/levene-test). Ce test permet de vérifier l’hypothèse nulle selon laquelle plusieurs échantillons proviennent d’une population à variance identique. De plus, il accepte des échantillons de tailles différentes.
-
-\begin{itemize}
-  \item $H_0$~: les groupes ont des variances égales.
-  \item $H_1$~: les groupes ont des variances différentes.
-\end{itemize}
-
-Si la p-valeur obtenue est supérieure à 0,05, on ne peut pas rejeter $H_0$ : les variances sont jugées homogènes. Si elle est inférieure à 0,05, on conclut à une différence significative des variances.
-
-Les hypothèses du test de Levene sont :
-\begin{itemize}
-  \item observations indépendantes,
-  \item variable mesurée à un niveau d'échelle métrique.
-\end{itemize}
-
-Nous avons implémenté ce test en Python, puis comparé nos résultats à ceux fournis par la fonction \texttt{levene} de la bibliothèque \texttt{SciPy} (cf. annexe).
-
-\subsection{Sélection empirique du meilleur paramétrage}
-
-Une fois l’impact des réglages mis en évidence, nous avons adopté une approche empirique : parmi les vingt acquisitions, nous avons sélectionné celle présentant l’écart-type le plus faible pour chaque capteur, indiquant la meilleure stabilité des mesures.
-
-Cette méthode, bien que simple, permet de retenir un paramétrage optimisé en termes de précision, tout en restant compatible avec les contraintes énergétiques et informatiques évoquées précédemment.
-

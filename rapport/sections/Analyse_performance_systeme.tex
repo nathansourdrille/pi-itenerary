@@ -30,8 +30,40 @@ Toutes les acquisitions ont été faites sur le même parcours, mais à des jour
 
 Avant de commencer une acquisition, nous avons toujours laissé la carte d’acquisition immobile pendant quelques secondes pour que les capteurs puissent se stabiliser. Cependant, cela a été fait à proximité d’un bâtiment, ce qui n’est pas idéal, en particulier pour le magnétomètre qui peut être perturbé par les structures métalliques aux alentours. Un axe d’amélioration serait donc de débuter les acquisitions dans un environnement dégagé, loin des bâtiments, pour limiter ces perturbations.
 
+\newpage
 \section{Description et analyse du choix des méthodes statistiques avec les résultats obtenus}
 
+\subsection{Approche Statistique}
+
+Nous avons adopté une démarche statistique pour le choix des paramètres d'acquisition. Vingt séries de mesures ont été réalisées en faisant varier au maximum les réglages des différents capteurs. Néanmoins, l'absence de référence externe (le smartphone) pour comparer nos résultats a posé la question suivante : comment choisir un bon paramétrage sans pouvoir évaluer précisément les erreurs systématiques ?
+
+\subsubsection{Test d'homogénéité des variances}
+
+Dans un premier temps, nous avons évalué l’impact des modifications de paramètres sur la dispersion des mesures à l’aide du test de Levene (https://datatab.fr/tutorial/levene-test). Ce test permet de vérifier l’hypothèse nulle selon laquelle plusieurs échantillons proviennent d’une population à variance identique. De plus, il accepte des échantillons de tailles différentes.
+
+\begin{itemize}
+  \item $H_0$~: les groupes ont des variances égales.
+  \item $H_1$~: les groupes ont des variances différentes.
+\end{itemize}
+
+Si la p-valeur obtenue est supérieure à 0,05, on ne peut pas rejeter $H_0$ : les variances sont jugées homogènes. Si elle est inférieure à 0,05, on conclut à une différence significative des variances.
+
+Les hypothèses du test de Levene sont :
+\begin{itemize}
+  \item observations indépendantes,
+  \item variable mesurée à un niveau d'échelle métrique.
+\end{itemize}
+
+Nous avons implémenté ce test en Python, puis comparé nos résultats à ceux fournis par la fonction \texttt{levene} de la bibliothèque \texttt{SciPy} (cf. annexe).
+
+\subsubsection{Sélection empirique du meilleur paramétrage}
+
+Une fois l’impact des réglages mis en évidence, nous avons adopté une approche empirique : parmi les vingt acquisitions, nous avons sélectionné celle présentant l’écart-type le plus faible pour chaque capteur, indiquant la meilleure stabilité des mesures.
+
+Cette méthode, bien que simple, permet de retenir un paramétrage optimisé en termes de précision, tout en restant compatible avec les contraintes énergétiques et informatiques évoquées précédemment.
+
+
+\subsection{Implémentation}
 Nous avons implémenté manuellement le test de Levene afin de vérifier l’homogénéité des variances entre plusieurs acquisitions. Pour valider notre approche, nous avons comparé les résultats obtenus à ceux fournis par la fonction \texttt{levene} de la bibliothèque \texttt{scipy}. Voici les différentes étapes du processus.
 
 \vspace{0.5cm}
@@ -71,6 +103,7 @@ Pour s’assurer de la validité de notre implémentation, nous avons comparé n
     \item Acquisition 12 pour le magnétomètre.
 \end{itemize}
 
+\newpage
 \section{Analyse des résultats de tracking obtenus}
 
 \subsection{Mouvement extérieur 1}
